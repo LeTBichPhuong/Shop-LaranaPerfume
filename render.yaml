@@ -49,6 +49,11 @@ services:
       - key: ENV_FILE
         value: .env.production
 
+      # DB_SSLMODE
+      - key: DB_SSLMODE
+        value: require
+
+
     # Commands executed during deploy/startup
     buildCommand: ""
     startCommand: >
