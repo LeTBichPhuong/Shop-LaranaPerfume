@@ -30,7 +30,7 @@ class ProductController extends Controller
     public function home()
     {
         // Debug: Kiểm tra view có tồn tại không
-        $viewPath = resource_path('views/home.blade.php');
+        $viewPath = resource_path('views/Home.blade.php');
         
         if (!file_exists($viewPath)) {
             return response()->json([
