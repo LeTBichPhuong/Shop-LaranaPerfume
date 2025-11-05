@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: larana-perfume
+    env: docker
+    plan: free
+    autoDeploy: true
+    region: singapore
+    envVars:
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://larana-perfume.onrender.com
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: larana-perfume-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: larana-perfume-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: larana-perfume-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: larana-perfume-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: larana-perfume-db
+          property: password
+      - key: PORT
+        value: 10000
+      - key: APP_ENV
+        value: production
+      - key: ENV_FILE
+        value: .env.production
+        
+databases:
+  - name: larana-perfume-db
+    plan: free
+    region: singapore
+
+

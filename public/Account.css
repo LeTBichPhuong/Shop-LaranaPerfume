@@ -1,0 +1,607 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Josefin Sans';
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    background: white;
+    padding: 10px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    font-size: 18px;
+}
+
+.nav-menu {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin: 0 15px;
+    position: relative;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+/* Logo giữa menu */
+.logo img {
+    width: 61px;
+    height: 61px;
+    border-radius: 50%;
+}
+
+/* Submenu */
+.submenu {
+    position: absolute;
+    background-color: #fff;
+    padding: 10px 0;
+    margin-top: 10px;
+    list-style: none;
+    font-size: 15px;
+    width: 160px;
+    line-height: 30px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transform: translateY(10px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    z-index: 999;
+}
+
+.nav-item.active .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.submenu li {
+    text-align: left;
+    padding: 0 10px;
+}
+
+.submenu li a {
+    color: #333;
+    font-weight: normal;
+}
+
+.menu li a:hover,
+.submenu li a:hover {
+    color: #7f7e7e;
+}
+
+.menu li a i {
+    font-size: 18px;
+}
+
+/* Thanh tìm kiếm */
+.search-container {
+    position: relative;
+}
+
+.search-container i {
+    font-size: 18px;
+    cursor: pointer;
+    color: #333;
+}
+
+.search-form {
+    display: none;
+    position: absolute;
+    top: -9px;
+    right: -26px;
+    z-index: 100;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input[type="text"] {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 50px;
+    width: 200px;
+    font-size: 14px;
+}
+
+.search-box button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.search-box button i {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Kết quả tìm kiếm thả xuống */
+.search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 320px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    max-height: 420px;
+    overflow-y: auto;
+    z-index: 3000;
+    padding: 6px 0;
+}
+
+.search-results h4 { 
+    margin: 8px 12px; 
+    font-size:14px; 
+    color:#333; 
+}
+
+/* item */
+.search-item {
+    display:flex;
+    gap:10px;
+    padding:8px 12px;
+    align-items:center;
+    text-decoration:none;
+    color:#222;
+}
+.search-item:hover { 
+    background:#f6f6f6; 
+}
+.search-item img { 
+    width:44px; 
+    height:44px; 
+    object-fit:cover; 
+    border-radius:6px; 
+}
+.search-item .price { 
+    color:#444; 
+    font-weight:500; 
+    font-size:13px; 
+    margin-top:4px; 
+}
+
+#searchResults::-webkit-scrollbar {
+    display: none;
+}
+
+/* mobile: thu nhỏ dropdown */
+@media (max-width:768px){
+    .search-results { right: -10px; width:320px; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tài khoản */
+main.account-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 70px;
+    width: 100%;
+    max-width: 1300px;
+    margin: 140px auto 100px;
+    color: #333;
+}
+
+.account-info{
+    font-size: 25px;
+    font-weight: 600;
+    color: #000;
+}
+
+/* Sidebar trái */
+.account-sidebar {
+    width: 220px;
+    padding-top: 20px;
+    border-right: 1px solid #eee;
+}
+
+.account-sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.account-sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.account-sidebar ul li a {
+    text-decoration: none;
+    color: #666;
+    font-size: 16px;
+    transition: all 0.25s ease;
+    display: inline-block;
+    padding: 6px 0;
+}
+
+.account-sidebar ul li a.active,
+.account-sidebar ul li a:hover {
+    color: #111;
+    font-weight: 600;
+}
+
+/* Phần nội dung chính */
+.account-main {
+    flex: 1;
+    max-width: 800px;
+}
+
+/* Các khối nội dung */
+.account-section {
+    margin-bottom: 50px;
+    padding: 20px 30px;
+    animation: fadeIn 0.4s ease;
+}
+
+.account-section h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #222;
+    font-weight: 600;
+}
+
+/* Form và nội dung trong mỗi phần */
+.account-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.account-section label {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+.account-section input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    width: 100%;
+}
+
+.account-section button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 15px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.25s ease;
+}
+
+.account-section button:hover {
+    background-color: #0056b3;
+}
+
+/* Ẩn form mặc định + hiệu ứng trượt */
+.hidden {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+.form-visible {
+    max-height: 600px;
+    opacity: 1;
+}
+
+/* Hiệu ứng */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Chữ trong phần chính */
+.account-main p,
+.account-main form {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555;
+}
+
+/* Nút ẩn form (nếu có) */
+.hidden {
+    display: none;
+}
+
+/* Form */
+.account-main form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.account-main input, .account-main button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.account-main button {
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.account-main button:hover {
+    background: #444;
+}
+
+/* Đơn hàng */
+.order-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.order-header h3 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.order-date {
+    color: #666;
+    margin: 0;
+    font-size: 14px;
+}
+
+.order-status .badge {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.badge-pending { background: #ffc107; color: #000; }
+.badge-processing { background: #2196F3; color: #fff; }
+.badge-shipping { background: #FF9800; color: #fff; }
+.badge-completed { background: #4CAF50; color: #fff; }
+.badge-cancelled { background: #f44336; color: #fff; }
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.order-items-table thead {
+    background: #f8f9fa;
+}
+
+.order-items-table th,
+.order-items-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.order-items-table th {
+    font-weight: 600;
+    color: #333;
+}
+
+.product-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.order-footer {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.order-total {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.order-total span {
+    color: #666;
+}
+
+.order-total strong {
+    font-size: 18px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state .text-muted {
+    color: #999;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* footer */
+footer {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.footer-top {
+    display: flex;
+    justify-content:  space-evenly; 
+    align-items: center; 
+    padding: 20px 80px; 
+}
+
+.title-sub {
+    color: white;
+    text-align: left; 
+}
+
+.title-sub h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.title-sub p {
+    font-size: 16px;
+    color: #ddd;
+}
+
+.subscribe {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.subscribe input {
+    padding: 10px;
+    width: 300px;
+    border-radius: 15px;
+    border: none;
+}
+
+.subscribe .btn-sub {
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.footer-section {
+    text-align: left;
+    transition: text-decoration 0.3s ease-in-out;
+}
+
+.footer-section h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 20px 0;
+}
+
+.footer-section p {
+    margin-top: 20px;
+}
+
+.social-icons i {
+    margin: 20px 10px;
+    cursor: pointer;
+}
+
+.footer-section li:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    border-top: 1px solid white;
+    padding-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    main.account-container {
+        flex-direction: column;
+        gap: 30px;
+        width: 95%;
+    }
+    .account-sidebar {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+    .account-sidebar ul {
+        display: flex;
+        gap: 20px;
+    }
+}
