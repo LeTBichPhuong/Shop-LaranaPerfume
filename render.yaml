@@ -3,9 +3,11 @@ services:
     name: larana-perfume
     env: docker
     plan: free
-    autoDeploy: true
     region: singapore
+    autoDeploy: true
+
     envVars:
+      # App configuration
       - key: APP_KEY
         generateValue: true
       - key: APP_ENV
@@ -14,38 +16,48 @@ services:
         value: false
       - key: APP_URL
         value: https://larana-perfume.onrender.com
+
+      # Database connection (Render will inject values automatically)
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
         fromDatabase:
-          name: larana-perfume-db
+          name: banhangnuochoa-db
           property: host
       - key: DB_PORT
         fromDatabase:
-          name: larana-perfume-db
+          name: banhangnuochoa-db
           property: port
       - key: DB_DATABASE
         fromDatabase:
-          name: larana-perfume-db
+          name: banhangnuochoa-db
           property: database
       - key: DB_USERNAME
         fromDatabase:
-          name: larana-perfume-db
+          name: banhangnuochoa-db
           property: user
       - key: DB_PASSWORD
         fromDatabase:
-          name: larana-perfume-db
+          name: banhangnuochoa-db
           property: password
+
+      # Web server port
       - key: PORT
         value: 10000
-      - key: APP_ENV
-        value: production
+
+      # Use your production environment file
       - key: ENV_FILE
         value: .env.production
-        
+
+    # Commands executed during deploy/startup
+    buildCommand: ""
+    startCommand: >
+      php artisan config:clear &&
+      php artisan migrate --force &&
+      php artisan route:cache &&
+      php artisan serve --host=0.0.0.0 --port=$PORT
+
 databases:
-  - name: larana-perfume-db
+  - name: banhangnuochoa-db
     plan: free
     region: singapore
-
-
