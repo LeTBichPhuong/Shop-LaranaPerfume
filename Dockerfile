@@ -30,4 +30,4 @@ RUN mkdir -p storage/framework/{cache,sessions,views} bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
 # Dọn cache cũ và khởi động server
-CMD ["sh", "-c", "php artisan config:clear && php artisan cache:clear && php artisan route:clear && php artisan view:clear && php -S 0.0.0.0:10000 -t public"]
+CMD ["bash", "-c", "php artisan config:clear && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php -S 0.0.0.0:${PORT} -t public"]
