@@ -37,16 +37,27 @@ RUN mkdir -p storage/framework/{cache,sessions,views} bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
 # ==============================
-# Wait for PostgreSQL (để tránh lỗi connection fail khi migrate)
+# Wait for PostgreSQL to be ready
 # ==============================
 COPY <<'EOF' /wait-for-db.sh
 #!/bin/bash
 echo "⏳ Waiting for PostgreSQL to be ready..."
-until php -r "try { new PDO(getenv('DB_CONNECTION').':host='.(getenv('DB_HOST')?:'localhost').';port='.(getenv('DB_PORT')?:5432).';dbname='.(getenv('DB_DATABASE')?:''); getenv('DB_USERNAME'), getenv('DB_PASSWORD')); echo '✅ Database ready!'; exit(0);} catch (Exception $e) { echo '.'; sleep(3);}"; do :; done
+until php -r "
+try {
+    \$dsn = 'pgsql:host=' . getenv('DB_HOST') . ';port=' . getenv('DB_PORT') . ';dbname=' . getenv('DB_DATABASE');
+    \$pdo = new PDO(\$dsn, getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
+    echo '✅ Database ready!';
+    exit(0);
+} catch (Exception \$e) {
+    echo '.';
+    sleep(3);
+}
+"; do :; done
 EOF
+
 RUN chmod +x /wait-for-db.sh
 
 # ==============================
-# Start Laravel
+# Start Laravel app
 # ==============================
 CMD ["bash", "-c", "/wait-for-db.sh && php artisan config:clear && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php -S 0.0.0.0:${PORT} -t public"]
