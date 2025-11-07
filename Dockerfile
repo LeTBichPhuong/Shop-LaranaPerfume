@@ -26,12 +26,8 @@ RUN apt-get update \
 # Copy mã nguồn Laravel và vendor từ stage 1
 COPY --from=vendor /app /app
 
-# Thiết lập biến môi trường Render
-ENV PORT=10000
-EXPOSE 10000
-
 # ==============================
-# Fix quyền ghi cho Laravel storage & cache
+# Tạo và cấp quyền thư mục cache sau khi copy
 # ==============================
 RUN mkdir -p storage/framework/{cache,sessions,views} bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
@@ -56,6 +52,12 @@ try {
 EOF
 
 RUN chmod +x /wait-for-db.sh
+
+# ==============================
+# Khai báo port Render sẽ dùng
+# ==============================
+ENV PORT=10000
+EXPOSE 10000
 
 # ==============================
 # Start Laravel app
