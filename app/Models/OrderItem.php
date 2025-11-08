@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Helper\Helpers;
 
 class OrderItem extends Model
 {
@@ -11,36 +12,40 @@ class OrderItem extends Model
 
     protected $fillable = ['order_id', 'product_name', 'product_image', 'quantity', 'price'];
 
+    /**
+     * Mối quan hệ: Một OrderItem thuộc về một Order
+     */
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
 
-    // Accessor price formatted (fix thừa 00)
-    public function getPriceFormattedAttribute()
+    /**
+     * Accessor: Định dạng lại giá hiển thị theo kiểu "1.200.000 ₫"
+     * - Luôn đảm bảo giá trị price được convert về số trước khi hiển thị
+     */
+    public function getPriceFormattedAttribute(): string
     {
-        $parsedPrice = $this->parsePrice($this->price);
-        return number_format($parsedPrice, 0, ',', '.') . ' ₫';
+        $price = Helpers::parse($this->price);
+        return Helpers::format($price);
     }
 
-    // Accessor subtotal formatted
-    public function getSubtotalFormattedAttribute()
+    /**
+     * Accessor: Tính thành tiền từng sản phẩm (price * quantity)
+     */
+    public function getSubtotalFormattedAttribute(): string
     {
-        $parsedPrice = $this->parsePrice($this->price);
-        $subtotal = $parsedPrice * $this->quantity;
-        return number_format($subtotal, 0, ',', '.') . ' ₫';
+        $price = Helpers::parse($this->price);
+        $subtotal = $price * (int) $this->quantity;
+        return Helpers::format($subtotal);
     }
 
-    // Helper parse price
-    private function parsePrice($priceString)
+    /**
+     * Mutator: Trước khi lưu vào DB, luôn chuyển giá tiền thành số thực
+     * (fix lỗi PostgreSQL invalid input syntax for numeric)
+     */
+    public function setPriceAttribute($value)
     {
-        $cleanPrice = preg_replace('/[^\d]/', '', (string) $priceString);
-        $price = (float) $cleanPrice;
-
-        if ($price >= 10000000 && $price % 100 === 0) {
-            $price /= 100;
-        }
-
-        return $price;
+        $this->attributes['price'] = Helpers::parse($value); 
     }
 }

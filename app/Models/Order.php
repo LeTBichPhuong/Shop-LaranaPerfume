@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Helper\Helpers; 
 
 class Order extends Model
 {
@@ -22,34 +23,36 @@ class Order extends Model
         'created_at' => 'datetime',
     ];
 
-    // Quan hệ với OrderItem
+    /**
+     * Một đơn hàng có nhiều sản phẩm (order_items)
+     */
     public function items()
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    // Quan hệ với User
+    /**
+     * Một đơn hàng thuộc về 1 người dùng
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Accessor để format tổng tiền 
-    public function getTotalFormattedAttribute()
+    /**
+     * Accessor: Định dạng tổng tiền khi hiển thị ra giao diện
+     */
+    public function getTotalFormattedAttribute(): string
     {
-        $parsedTotal = $this->parsePrice($this->total);
-        return number_format($parsedTotal, 0, ',', '.') . ' ₫';  
+        $total = Helpers::parse($this->total);
+        return Helpers::format($total);
     }
 
-    private function parsePrice($priceString)
+    /**
+     * Mutator: Khi lưu tổng tiền, tự động chuyển về số thực
+     */
+    public function setTotalAttribute($value)
     {
-        $cleanPrice = preg_replace('/[^\d]/', '', (string) $priceString);
-        $price = (float) $cleanPrice;
-
-        if ($price >= 10000000 && $price % 100 === 0) {
-            $price /= 100;
-        }
-
-        return $price;
+        $this->attributes['total'] = Helpers::parse($value);
     }
 }
