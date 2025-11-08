@@ -40,7 +40,7 @@ class ProductController extends Controller
             ], 404);
         }
         
-        return view('home');
+        return view('Home');
     }
     
     // Hiển thị danh sách sản phẩm 
