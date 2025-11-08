@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Helper\Helpers;
 
 class Cart extends Model
 {
@@ -26,7 +27,7 @@ class Cart extends Model
     // Accessor để lấy giá dạng số khi cần tính toán
     public function getPriceNumericAttribute()
     {
-        return \App\Helper\helpers::parse($this->price);
+        return Helpers::parse($this->price);
     }
 
     // Quan hệ với User

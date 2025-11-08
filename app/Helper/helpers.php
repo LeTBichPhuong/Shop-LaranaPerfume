@@ -1,41 +1,70 @@
 <?php
 
-if (!function_exists('parse_price')) {
+namespace App\Helper;
+
+/**
+ * Class Helpers
+ *
+ * Chứa các hàm tiện ích (helper) dùng chung toàn dự án.
+ * Cách gọi:
+ *    use App\Helper\Helpers;
+ *    Helpers::parse('1.200.000 ₫');
+ *    Helpers::format(1200000);
+ */
+class Helpers
+{
     /**
-     * Chuyển chuỗi tiền tệ Việt Nam thành số thực.
+     * Chuyển chuỗi giá tiền Việt Nam thành số thực (float)
+     *
      *
      * @param string $priceString
      * @return float
      */
-    function parse_price(string $priceString): float
+    public static function parse(string $priceString): float
     {
-        // Loại bỏ dấu chấm, khoảng trắng, ký hiệu tiền tệ
-        $number = str_replace(['.', ' ', '₫'], '', $priceString);
+        // Loại bỏ các ký tự không cần thiết như dấu chấm, khoảng trắng, ký hiệu tiền
+        $number = str_replace(['.', ',', ' ', '₫', 'đ', 'VNĐ', 'vnd'], '', $priceString);
+
+        // Nếu chuỗi rỗng hoặc không phải số, trả về 0.0
+        if (!is_numeric($number)) {
+            return 0.0;
+        }
+
         return (float) $number;
     }
-}
 
-if (!function_exists('format_price')) {
     /**
-     * Định dạng số thành chuỗi tiền tệ Việt Nam.
+     * Định dạng số thành chuỗi giá tiền Việt Nam
+     *
      *
      * @param float|int $number
-     * @param bool $includeSymbol - có hiển thị ký hiệu ₫ hay không
+     * @param bool $includeSymbol - có hiển thị ký hiệu tiền hay không
      * @return string
      */
-    function format_price(float|int $number, bool $includeSymbol = true): string
+    public static function format(float|int $number, bool $includeSymbol = true): string
     {
         $formatted = number_format($number, 0, ',', '.');
-        return $includeSymbol ? $formatted . ' ₫' : $formatted;
+        return $includeSymbol ? "{$formatted} ₫" : $formatted;
     }
-}
 
-/**
- * Ví dụ helper đơn giản để kiểm tra autoload có hoạt động không.
- */
-if (!function_exists('example_helper')) {
-    function example_helper(): string
+    /**
+     * Kiểm tra xem chuỗi có chứa ký hiệu tiền tệ hay không
+     *
+     * @param string $value
+     * @return bool
+     */
+    public static function hasCurrencySymbol(string $value): bool
     {
-        return 'Laravel helper ready!';
+        return str_contains($value, '₫') || str_contains($value, 'VNĐ') || str_contains($value, 'vnd');
+    }
+
+    /**
+     * Debug helper — chỉ dùng khi cần test
+     *
+     * @return string
+     */
+    public static function test(): string
+    {
+        return "Helper hoạt động tốt!";
     }
 }
