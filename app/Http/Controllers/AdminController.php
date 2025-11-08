@@ -39,7 +39,7 @@ class AdminController extends Controller
             ->pluck('revenue', 'month')
             ->toArray();
 
-        return view('admin', compact('soldOrdersCount', 'revenue', 'customerCount', 'totalOrders', 'monthlyRevenue'));
+        return view('Admin', compact('soldOrdersCount', 'revenue', 'customerCount', 'totalOrders', 'monthlyRevenue'));
     }
 
 // Products

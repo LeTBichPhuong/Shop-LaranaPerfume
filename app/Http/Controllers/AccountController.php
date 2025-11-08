@@ -21,7 +21,7 @@ class AccountController extends Controller
                       ->get();
         // $orders = $user->orders()->orderBy('created_at', 'desc')->get();
 
-        return view('account', compact('user', 'orders'));
+        return view('Account', compact('user', 'orders'));
     }
 
     // Cập nhật thông tin cơ bản của tài khoản

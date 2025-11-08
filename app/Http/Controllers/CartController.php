@@ -35,7 +35,7 @@ class CartController extends Controller
 
         Log::info("Cart total: {$total}");  
 
-        return view('cart', compact('cartItems', 'total'));
+        return view('Cart', compact('cartItems', 'total'));
     }
 
     // Thêm sản phẩm vào giỏ
