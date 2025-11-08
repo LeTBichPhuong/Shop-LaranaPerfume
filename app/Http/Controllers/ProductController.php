@@ -96,22 +96,38 @@ class ProductController extends Controller
     }
 
     // API trả về JSON file crawl gốc
+    // public function getJson()
+    // {
+    //     $path = storage_path('app/products.json');
+    //     if (!file_exists($path)) {
+    //         return response()->json(['error' => 'File JSON không tồn tại'], 404);
+    //     }
+
+    //     $json = file_get_contents($path);
+    //     $data = json_decode($json, true);
+
+    //     if (json_last_error() !== JSON_ERROR_NONE) {
+    //         return response()->json(['error' => 'Lỗi parse JSON: ' . json_last_error_msg()], 500);
+    //     }
+
+    //     return response()->json($data);
+    // }
     public function getJson()
     {
-        $path = storage_path('app/products.json');
-        if (!file_exists($path)) {
-            return response()->json(['error' => 'File JSON không tồn tại'], 404);
+        try {
+            // Lấy danh sách sản phẩm có liên kết thương hiệu
+            $products = Product::with('brand')->get();
+
+            if ($products->isEmpty()) {
+                return response()->json(['error' => 'Không có sản phẩm nào trong cơ sở dữ liệu.'], 404);
+            }
+
+            return response()->json($products);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $json = file_get_contents($path);
-        $data = json_decode($json, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return response()->json(['error' => 'Lỗi parse JSON: ' . json_last_error_msg()], 500);
-        }
-
-        return response()->json($data);
     }
+
 
     // Method show() cho chi tiết sản phẩm
     public function show(Product $product) {
