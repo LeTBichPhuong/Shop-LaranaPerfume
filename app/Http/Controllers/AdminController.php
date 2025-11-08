@@ -32,10 +32,11 @@ class AdminController extends Controller
         $revenue = Order::whereIn('status', ['confirmed', 'shipped', 'delivered'])->sum('total');
         $customerCount = User::whereHas('orders')->count();
         $totalOrders = Order::count();
-        $monthlyRevenue = Order::select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(total) as revenue'))
-            ->whereYear('created_at', now()->year)
+        $monthlyRevenue = Order::selectRaw('EXTRACT(MONTH FROM created_at) AS month, SUM(total) AS revenue')
+            ->whereRaw('EXTRACT(YEAR FROM created_at) = ?', [now()->year])
             ->whereIn('status', ['confirmed', 'shipped', 'delivered'])
             ->groupBy('month')
+            ->orderBy('month')
             ->pluck('revenue', 'month')
             ->toArray();
 
