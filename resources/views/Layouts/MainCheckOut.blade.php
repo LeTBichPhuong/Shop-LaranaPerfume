@@ -1,4 +1,4 @@
-@extends('checkout')
+@extends('Checkout')
 
 @section('checkout')
 <style>
