@@ -98,7 +98,7 @@ function generateSliderHtml(products, tabId) {
     } else {
         randomProducts.forEach(product => {
             html += `
-                <a href="/san-pham/${product.name}" class="product-link">
+                <a href="/san-pham/${product.name}" class="product-link" style="color:black;">
                     <div class="product">
                         <img src="${product.image}" alt="${product.name}" 
                             onerror="this.src='https://via.placeholder.com/150?text=No+Image';">
