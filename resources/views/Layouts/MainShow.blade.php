@@ -524,6 +524,7 @@
         <h4>Mô tả sản phẩm</h4>
         <p>{{ $product->description ?? 'Sản phẩm chưa có mô tả chi tiết.' }}</p>
     </div>
+</div>
 
     <!-- Sản phẩm nổi bật -->
     <div class="featured-products mt-5">
@@ -562,7 +563,6 @@
             @endforeach
         </div>
     </div>
-</div>
 
 <script>
     // Nút tăng giảm số lượng
