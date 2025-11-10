@@ -8,8 +8,8 @@
     
     .product-detail.container {
         max-width: 1200px;
-        margin: 120px auto 60px;
-        padding: 40px 20px;
+        margin: 120px auto 0;
+        padding: 40px 20px 0; 
     }
 
     .row {
@@ -253,7 +253,7 @@
     .featured-products {
         margin-top: 10px;
         text-align: center; 
-        padding: 0 50px;
+        padding: 10px 50px 80px;
         width: 100%;
     }
 
