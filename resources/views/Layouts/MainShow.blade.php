@@ -251,22 +251,44 @@
 
     /* SẢN PHẨM NỔI BẬT */
     .featured-products {
-        margin-top: 20px;
-        text-align: center;
+        margin-top: 10px;
+        text-align: center; 
         padding-top: 30px;
         width: 100%;
+    }
+
+    .featured-products h4 {
+        font-weight: 700;
+        font-size: 24px;
+        margin-bottom: 40px;
+        color: #222;
+        position: relative;
+        display: inline-block;
+        border-bottom: 3px solid #4a4a4c;
+    }
+
+    .featured-products h4::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        border-radius: 2px;
     }
 
     .featured-products .row {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 25px;
+        gap: 20px;
     }
 
     .featured-products .col-md-2 {
-        flex: 0 0 19%;
-        max-width: 19%;
+        flex: 0 0 18%;
+        max-width: 18%;     
+        padding: 0 10px;
     }
 
     .product-card {
@@ -275,67 +297,72 @@
         overflow: hidden;
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         transition: all 0.3s ease;
+
         width: 100%;
         display: flex;
         flex-direction: column;
-        height: 360px;
+        height: 100%;
     }
 
     .product-card:hover {
-        transform: translateY(3px);
+        transform: translateY(1px);
     }
 
     .product-card img {
         width: 100%;
-        height: 200px;
+        height: 260px;
         object-fit: contain;
         background: #fff;
     }
 
     .product-card .card-body {
-        padding: 12px;
+        padding: 15px;
         text-align: center;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
     }
 
     .brand-title {
         font-size: 13px;
+        margin-top: 10px;
         color: #333;
-        margin-bottom: 4px;
     }
 
     .product-title {
         font-size: 14px;
+        margin: 10px 0;
         color: #333;
         font-weight: 600;
-        min-height: 36px;
-        margin-bottom: 5px;
+        min-height: 38px;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
+    /* Giá */
     .product-card .price-box {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 6px;
-        margin-top: 5px;
+        gap: 8px;
+        min-height: 28px;
+        margin-top: 8px;
     }
 
-    .product-card .original-price {
-        font-size: 13px;
+    .product-card .price-box .original-price {
+        font-size: 14px;
         color: #999;
         text-decoration: line-through;
+        line-height: 1;
     }
 
-    .product-card .discounted-price {
+    .product-card .price-box .discounted-price {
         font-size: 16px;
         color: #000;
         font-weight: 700;
+        line-height: 1;
     }
 
     /* RESPONSIVE */
