@@ -281,30 +281,29 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 20px;
+        gap: 25px;
     }
 
     .featured-products .col-md-2 {
-        flex: 0 0 calc(16.66% - 20px);
-        max-width: calc(16.66% - 20px);
+        flex: 0 0 auto;
+        width: 250px; 
     }
+
 
     /* sản phẩm nổi bật */
     .product-card {
-        border: 1px solid #000;
         border-radius: 15px;
-        transition: all 0.3s ease;
         background: #fff;
         overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        width: 100%;
+        min-width: 240px;
+        max-width: 260px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        gap: 20px;
-        width: 100%;
-        min-width: 230px;
-        max-width: 280px;
-        margin: auto;
     }
+
 
     .product-card:hover {
         transform: translateY(1px);
