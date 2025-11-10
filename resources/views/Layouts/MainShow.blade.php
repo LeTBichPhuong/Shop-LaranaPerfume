@@ -347,20 +347,22 @@
         justify-content: center;
         align-items: center;
         gap: 8px;
-        min-height: 30px;
+        min-height: 28px;
         margin-top: 8px;
     }
 
-    .product-card .original-price {
+    .product-card .price-box .original-price {
         font-size: 14px;
         color: #999;
         text-decoration: line-through;
+        line-height: 1;
     }
 
-    .product-card .discounted-price {
+    .product-card .price-box .discounted-price {
         font-size: 16px;
-        font-weight: 700;
         color: #000;
+        font-weight: 700;
+        line-height: 1;
     }
 
     /* RESPONSIVE */
