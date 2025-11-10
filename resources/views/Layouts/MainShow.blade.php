@@ -261,6 +261,7 @@
         font-weight: 700;
         font-size: 24px;
         margin-bottom: 40px;
+        padding-bottom: 10px; 
         color: #222;
         position: relative;
         display: inline-block;
