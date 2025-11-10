@@ -327,13 +327,13 @@
     .brand-title {
         font-size: 13px;
         margin-top: 10px;
-        color: #333;
+        color: #000;
     }
 
     .product-title {
         font-size: 14px;
         margin: 10px 0;
-        color: #333;
+        color: #777777;
         font-weight: 600;
         display: -webkit-box;
         -webkit-line-clamp: 2;

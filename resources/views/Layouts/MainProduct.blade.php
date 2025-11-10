@@ -149,7 +149,7 @@
     .brand-title {
         font-size: 0.75rem;
         font-weight: 600;
-        color: #666;
+        color: #000;
         text-transform: uppercase;
         margin-bottom: 2px;
         letter-spacing: 0.5px;
@@ -158,7 +158,7 @@
     .product-title {
         font-size: 0.85rem;
         font-weight: 600;
-        color: #333;
+        color: #777777;
         margin-bottom: 4px;
         height: 2.2em;
         overflow: hidden;
