@@ -67,6 +67,24 @@
         <div class="blog">
             <h3>Chưa có thông tin bài viết mới</h3>
         </div>
+
+        <!-- Chatbot Widget -->
+        <div id="chatbot-container">
+            <button id="chatbot-toggle-btn" onclick="toggleChatbot()">
+                <i class='bx bx-message-alt-dots'></i>
+            </button>
+            <div id="chatbot-box">
+                <div id="chatbot-header">
+                    <span><i class='bx bx-message-alt-dots'></i> Larana bot</span>
+                    <button id="chatbot-close" onclick="toggleChatbot()">×</button>
+                </div>
+                <div id="chatbot-messages"></div>
+                <div id="chatbot-input-area">
+                    <input type="text" id="chatbot-input" placeholder="Nhập tin nhắn..." onkeydown="handleKey(event)" />
+                    <button onclick="sendMessage()">Gửi</button>
+                </div>
+            </div>
+        </div>
     <!-- End main -->
         
     <!-- Footer -->

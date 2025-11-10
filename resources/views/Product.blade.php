@@ -54,13 +54,33 @@
             </ul>
         </nav> 
     </header>
+    <!-- End header -->
 
-    <!-- Main list sản phẩm -->
-    @yield('master')
-    <!-- End main -->
+    <!-- Main -->
+        <!-- Main list sản phẩm -->
+        @yield('master')
+        <!-- End main -->
 
-    <!-- Main chi tiết sản phẩm -->
-    @yield('content')
+        <!-- Main chi tiết sản phẩm -->
+        @yield('content')
+
+        <!-- Chatbot Widget -->
+        <div id="chatbot-container">
+            <button id="chatbot-toggle-btn" onclick="toggleChatbot()">
+                <i class='bx bx-message-alt-dots'></i>
+            </button>
+            <div id="chatbot-box">
+                <div id="chatbot-header">
+                    <span><i class='bx bx-message-alt-dots'></i> Larana bot</span>
+                    <button id="chatbot-close" onclick="toggleChatbot()">×</button>
+                </div>
+                <div id="chatbot-messages"></div>
+                <div id="chatbot-input-area">
+                    <input type="text" id="chatbot-input" placeholder="Nhập tin nhắn..." onkeydown="handleKey(event)" />
+                    <button onclick="sendMessage()">Gửi</button>
+                </div>
+            </div>
+        </div>
     <!-- End main -->
 
     <!-- Footer -->

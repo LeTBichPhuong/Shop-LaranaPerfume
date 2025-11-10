@@ -440,91 +440,91 @@
 @endpush
 
 @section('content')
-<div class="product-detail container my-5">
-    <div class="row">
-        <!-- Ảnh sản phẩm -->
-        <div class="col-md-6 image-section">
-            <img src="{{ $product->image ?? asset('img/placeholder-product.png') }}" 
-                 alt="{{ $product->name }}" 
-                 class="img-fluid main-image rounded shadow-sm"
-                 onerror="this.onerror=null;this.src='https://placehold.co/500x500/e0e0e0/555?text=Product+Image';">
-        </div>
-
-        <!-- Thông tin sản phẩm -->
-        <div class="col-md-6 info-section">
-            <p class="brand-name"><strong>{{ $product->brand->name ?? 'Không rõ' }}</strong></p>
-            <h2 class="product-name">{{ $product->name }}</h2>
-            <p class="gender"><strong>
-                @php
-                    $gender = strtolower(trim($product->gender));
-                @endphp
-
-                @if($gender === 'nam')
-                    <i class='bx bx-male-sign'></i> Nam
-                @elseif($gender === 'unisex')
-                    <i class='bx bx-male-female'></i> Unisex
-                @else
-                    <i class='bx bx-female-sign'></i> Nữ
-                @endif
-            </strong></p>
-            <div class="price-box">
-                @if(isset($product->original_price) && $product->original_price > $product->price)
-                    <div class="original-price">{{ $product->original_price }}</div>
-                    <div class="discounted-price has-discount">{{ $product->price }}</div>
-                @else
-                    <div class="discounted-price">{{ $product->price }}</div>
-                @endif
+    <div class="product-detail container my-5">
+        <div class="row">
+            <!-- Ảnh sản phẩm -->
+            <div class="col-md-6 image-section">
+                <img src="{{ $product->image ?? asset('img/placeholder-product.png') }}" 
+                    alt="{{ $product->name }}" 
+                    class="img-fluid main-image rounded shadow-sm"
+                    onerror="this.onerror=null;this.src='https://placehold.co/500x500/e0e0e0/555?text=Product+Image';">
             </div>
 
-            <!-- Dung tích -->
-            <div class="volume-section my-3">
-                <h4 class="me-3" style="padding:10px 0">Dung tích:</h4>
-                
-                <label>
-                    <input type="radio" name="volume" checked>
-                    100ml
-                </label>
-                
-                <label>
-                    <input type="radio" name="volume">
-                    200ml
-                </label>
-                
-                <label>
-                    <input type="radio" name="volume">
-                    500ml
-                </label>
-            </div>
+            <!-- Thông tin sản phẩm -->
+            <div class="col-md-6 info-section">
+                <p class="brand-name"><strong>{{ $product->brand->name ?? 'Không rõ' }}</strong></p>
+                <h2 class="product-name">{{ $product->name }}</h2>
+                <p class="gender"><strong>
+                    @php
+                        $gender = strtolower(trim($product->gender));
+                    @endphp
 
-            <div class="form-cart">
-                <!-- Số lượng -->
-                <div class="quantity-section my-3 d-flex align-items-center">
-                    <button class="btn btn-outline-dark quantity-btn" id="decrease">-</button>
-                    <input type="number" id="quantity" class="form-control text-center mx-2" value="1" min="1" style="width:70px;">
-                    <button class="btn btn-outline-dark quantity-btn" id="increase">+</button>
+                    @if($gender === 'nam')
+                        <i class='bx bx-male-sign'></i> Nam
+                    @elseif($gender === 'unisex')
+                        <i class='bx bx-male-female'></i> Unisex
+                    @else
+                        <i class='bx bx-female-sign'></i> Nữ
+                    @endif
+                </strong></p>
+                <div class="price-box">
+                    @if(isset($product->original_price) && $product->original_price > $product->price)
+                        <div class="original-price">{{ $product->original_price }}</div>
+                        <div class="discounted-price has-discount">{{ $product->price }}</div>
+                    @else
+                        <div class="discounted-price">{{ $product->price }}</div>
+                    @endif
                 </div>
 
-                <!-- Nút thêm giỏ hàng -->
-                <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-dark btn-lg w-100 mt-3">Thêm vào giỏ hàng</button>
-                </form>
-            </div>
+                <!-- Dung tích -->
+                <div class="volume-section my-3">
+                    <h4 class="me-3" style="padding:10px 0">Dung tích:</h4>
+                    
+                    <label>
+                        <input type="radio" name="volume" checked>
+                        100ml
+                    </label>
+                    
+                    <label>
+                        <input type="radio" name="volume">
+                        200ml
+                    </label>
+                    
+                    <label>
+                        <input type="radio" name="volume">
+                        500ml
+                    </label>
+                </div>
 
-            <!-- Liên hệ -->
-            <p class="contact mt-4 text-muted">
-                Gọi ngay <i class='bx bxs-phone'></i> <strong> 0386759355 (8:30 AM - 21:00PM)</strong>
-                <h5 style="margin: 10px 0; text-align: center;">Tư vấn miễn phí</h5>
-            </p>
+                <div class="form-cart">
+                    <!-- Số lượng -->
+                    <div class="quantity-section my-3 d-flex align-items-center">
+                        <button class="btn btn-outline-dark quantity-btn" id="decrease">-</button>
+                        <input type="number" id="quantity" class="form-control text-center mx-2" value="1" min="1" style="width:70px;">
+                        <button class="btn btn-outline-dark quantity-btn" id="increase">+</button>
+                    </div>
+
+                    <!-- Nút thêm giỏ hàng -->
+                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-dark btn-lg w-100 mt-3">Thêm vào giỏ hàng</button>
+                    </form>
+                </div>
+
+                <!-- Liên hệ -->
+                <p class="contact mt-4 text-muted">
+                    Gọi ngay <i class='bx bxs-phone'></i> <strong> 0386759355 (8:30 AM - 21:00PM)</strong>
+                    <h5 style="margin: 10px 0; text-align: center;">Tư vấn miễn phí</h5>
+                </p>
+            </div>
+        </div>
+        <hr style="color:#4a4a4c;">
+        <!-- Mô tả sản phẩm -->
+        <div class="product-description mt-5">
+            <h4>Mô tả sản phẩm</h4>
+            <p>{{ $product->description ?? 'Sản phẩm chưa có mô tả chi tiết.' }}</p>
         </div>
     </div>
-    <hr style="color:#4a4a4c;">
-    <!-- Mô tả sản phẩm -->
-    <div class="product-description mt-5">
-        <h4>Mô tả sản phẩm</h4>
-        <p>{{ $product->description ?? 'Sản phẩm chưa có mô tả chi tiết.' }}</p>
-    </div>
-</div>
 
     <!-- Sản phẩm nổi bật -->
     <div class="featured-products mt-5">
