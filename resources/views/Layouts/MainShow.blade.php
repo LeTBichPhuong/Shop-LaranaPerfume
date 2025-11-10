@@ -291,7 +291,7 @@
 
     /* sản phẩm nổi bật */
     .product-card {
-        border: #000;
+        border: 1px solid #000;
         border-radius: 15px;
         transition: all 0.3s ease;
         background: #fff;
@@ -299,6 +299,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        gap: 20px;
         width: 100%;
         min-width: 230px;
         max-width: 280px;
