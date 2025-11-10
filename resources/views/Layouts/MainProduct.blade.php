@@ -167,9 +167,8 @@
         -webkit-box-orient: vertical;
     }
 
-    /* Giá trong danh sách sản phẩm */
+    /* Giá */
     .price-section {
-        min-height: 55px;
         display: flex;
         flex-direction: column;
         justify-content: center;

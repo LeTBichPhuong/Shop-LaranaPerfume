@@ -333,7 +333,7 @@
 
     /* Giá */
     .product-card .price-box {
-        min-height: 55px; 
+        min-height: 40px; 
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -344,7 +344,7 @@
 
     /* Giá gốc */
     .product-card .price-box .original-price {
-        font-size: 14px;
+        font-size: 13px;
         color: #999;
         text-decoration: line-through;
         line-height: 1.2;
@@ -353,7 +353,7 @@
 
     /* Giá giảm */
     .product-card .price-box .discounted-price {
-        font-size: 20px;
+        font-size: 14px;
         font-weight: 700;
         color: #000;
         line-height: 1.2;
