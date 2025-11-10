@@ -304,18 +304,17 @@
         flex-direction: column;
     }
 
-
     .product-card:hover {
         transform: translateY(1px);
     }
 
     .product-card img {
         width: 100%;
-        height: 250px;
+        height: 250px; 
         object-fit: contain;
-        padding: 15px;
-        transition: transform 0.3s ease;
+        background: #fff;
     }
+
 
     .product-card:hover img {
         transform: scale(1.05);
