@@ -347,6 +347,26 @@ header {
     background-color: #333;
 }
 
+.discounted-price {
+    color: #000;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.original-price {
+    font-size: 13px;
+    color: #999;
+    text-decoration: line-through;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.no-discount {
+    color: #000;
+    font-weight: 700;
+    font-size: 16px;
+}
+
 /* Main */
 .main-section {
     text-align: center;

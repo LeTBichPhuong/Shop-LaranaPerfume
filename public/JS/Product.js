@@ -48,41 +48,33 @@ function getProductsByGender(data) {
 }
 
 // Định dạng hiển thị giá
-function formatPrice(raw) {
-    if (!raw) return `<strong>Liên hệ</strong>`;
+function formatPrice(priceStr) {
+    if (!priceStr) return "";
 
-    const m = raw.match(
-        /(\d{1,3}(?:[.\s]\d{3})+|\d+)\s*đ?(?:\s+(\d{1,3}(?:[.\s]\d{3})+|\d+)\s*đ?)?/i
-    );
+    // Tách theo dấu cách
+    const parts = priceStr.trim().split(" ");
 
-    if (!m) return `<strong>${raw}</strong>`;
+    // Trường hợp có cả giá gốc và giá mới
+    if (parts.length > 2) {
+        const oldPrice = parts[0] + " " + parts[1];
+        const newPrice = parts.slice(2).join(" ");
 
-    // Convert chuỗi -> số
-    const toInt = s => parseInt(String(s).replace(/[^\d]/g, ''), 10);
-
-    const first  = toInt(m[1]);       // luôn có
-    const second = m[2] ? toInt(m[2]) : null; // có thể không có
-
-    // Hàm định dạng tiền VND
-    const fmt = n => n.toLocaleString('vi-VN');
-
-    if (second) {
-        // Có giá gốc + giá khuyến mãi
         return `
-            <div class="price-container">
-                <span class="old-price">${fmt(first)} ₫</span>
-                <span class="new-price">${fmt(second)} ₫</span>
+            <div class="price-container product-card">
+                <span class="original-price">${oldPrice}</span>
+                <span class="discounted-price">${newPrice}</span>
             </div>
         `;
     }
 
-    // Chỉ có 1 mức giá
+    // Trường hợp không có giảm giá
     return `
-        <div class="price-container">
-            <span class="new-price">${fmt(first)} ₫</span>
+        <div class="price-container product-card">
+            <span class="no-discount">${priceStr}</span>
         </div>
     `;
 }
+
 
 
 // Tạo slider riêng cho từng giới tính

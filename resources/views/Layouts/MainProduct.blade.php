@@ -174,20 +174,24 @@
         gap: 2px;
         align-items: flex-start;
     }
-
-    .original-price {
-        color: #dc3545;
-        font-size: 0.8rem;
-        font-weight: 500;
-        margin: 0;
+    
+    .price-section .original-price {
+        font-size: 14px;
+        color: #888;
         text-decoration: line-through;
+        margin-bottom: 3px;
     }
 
-    .discounted-price {
-        font-size: 0.95rem;
-        font-weight: bold;
+    .price-section .discounted-price {
+        font-size: 18px;
         color: #000;
-        margin-top: 2px;
+        font-weight: 700;
+    }
+
+    .price-section .discounted-price:not(.has-discount) {
+        font-size: 18px;
+        color: #000;
+        font-weight: 700;
     }
 
     /* Nút thêm giỏ hàng */
@@ -238,12 +242,6 @@
         font-size: 1.1rem;
         margin: 0;
     }
-
-    /* Phân trang */
-    .pagination-section {
-        display: none;
-    }
-
     /* Animation khi thêm vào giỏ */
     @keyframes addToCart {
         0% { transform: scale(1); }
@@ -370,7 +368,7 @@
                                     <div class="price-section">
                                         @if(isset($product->original_price) && $product->original_price > $product->price)
                                             <div class="original-price">{{ $product->original_price }}</div>
-                                            <div class="discounted-price">{{ $product->price }}</div>
+                                            <div class="discounted-price has-discount">{{ $product->price }}</div>
                                         @else
                                             <div class="discounted-price">{{ $product->price }}</div>
                                         @endif

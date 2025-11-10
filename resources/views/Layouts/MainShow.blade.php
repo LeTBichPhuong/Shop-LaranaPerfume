@@ -331,25 +331,41 @@
         overflow: hidden;   
     }
 
+    /* Khối giá */
     .product-card .price-box {
-        margin: 10px 0 0;
+        display: flex;
+        flex-direction: column;
+        margin-top: 8px;
         padding: 0;
         background: none;
     }
 
-    .product-card .discounted-price {
-        color: #000;
-        font-weight: 700;
-        font-size: 16px;
-    }
-
-    .product-card .original-price {
+    /* Giá gốc */
+    .product-card .price-box .original-price {
         font-size: 13px;
         color: #999;
         text-decoration: line-through;
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
     }
+
+    /* Giá giảm */
+    .product-card .price-box .discounted-price {
+        font-size: 16px;
+        font-weight: 700;
+        color: #000;
+    }
+
+    /* Khi có giảm giá */
+    .product-card .price-box .discounted-price.has-discount {
+        color: #000;
+    }
+
+    /* Khi KHÔNG có giảm giá */
+    .product-card .price-box .discounted-price:not(.has-discount) {
+        color: #000;
+    }
+
 
     /* RESPONSIVE */
     @media (max-width: 992px) {
@@ -456,7 +472,7 @@
             <div class="price-box">
                 @if(isset($product->original_price) && $product->original_price > $product->price)
                     <div class="original-price">{{ $product->original_price }}</div>
-                    <div class="discounted-price">{{ $product->price }}</div>
+                    <div class="discounted-price has-discount">{{ $product->price }}</div>
                 @else
                     <div class="discounted-price">{{ $product->price }}</div>
                 @endif
