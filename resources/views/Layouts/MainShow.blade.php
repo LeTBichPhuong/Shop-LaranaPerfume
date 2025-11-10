@@ -253,7 +253,8 @@
     .featured-products {
         margin-top: 10px;
         text-align: center; 
-        padding: 30px;
+        padding-top: 30px;
+        width: 100%;
     }
 
     .featured-products h4 {
@@ -285,22 +286,8 @@
     }
 
     .featured-products .col-md-2 {
-        flex: 0 0 16.66%;
-        max-width: 16.66%;
-        padding: 0 10px;
-    }
-
-   /* SẢN PHẨM NỔI BẬT */
-    .featured-products .row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .featured-products .col-md-2 {
-        flex: 0 0 16.66%;
-        max-width: 16.66%;
+        flex: 0 0 18%;
+        max-width: 18%;     
         padding: 0 10px;
     }
 
@@ -310,9 +297,11 @@
         overflow: hidden;
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         transition: all 0.3s ease;
+
         width: 100%;
         display: flex;
         flex-direction: column;
+        height: 100%;
     }
 
     .product-card:hover {
@@ -321,7 +310,7 @@
 
     .product-card img {
         width: 100%;
-        height: 220px;
+        height: 260px;
         object-fit: contain;
         background: #fff;
     }
@@ -358,22 +347,20 @@
         justify-content: center;
         align-items: center;
         gap: 8px;
-        min-height: 28px;
+        min-height: 30px;
         margin-top: 8px;
     }
 
-    .product-card .price-box .original-price {
+    .product-card .original-price {
         font-size: 14px;
         color: #999;
         text-decoration: line-through;
-        line-height: 1;
     }
 
-    .product-card .price-box .discounted-price {
+    .product-card .discounted-price {
         font-size: 16px;
-        color: #000;
         font-weight: 700;
-        line-height: 1;
+        color: #000;
     }
 
     /* RESPONSIVE */
