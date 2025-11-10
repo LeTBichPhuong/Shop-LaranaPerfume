@@ -51,12 +51,11 @@ function getProductsByGender(data) {
 function formatPrice(raw) {
     if (!raw) return `<strong>Liên hệ</strong>`;
 
-    // Bắt 1 hoặc 2 mức giá (VD: "7.500.000 đ 6.800.000 đ")
     const m = raw.match(
         /(\d{1,3}(?:[.\s]\d{3})+|\d+)\s*đ?(?:\s+(\d{1,3}(?:[.\s]\d{3})+|\d+)\s*đ?)?/i
     );
 
-    if (!m) return `<strong>${raw}</strong>`; // fallback nếu sai format
+    if (!m) return `<strong>${raw}</strong>`;
 
     // Convert chuỗi -> số
     const toInt = s => parseInt(String(s).replace(/[^\d]/g, ''), 10);
@@ -99,13 +98,15 @@ function generateSliderHtml(products, tabId) {
     } else {
         randomProducts.forEach(product => {
             html += `
-                <div class="product">
-                    <img src="${product.image}" alt="${product.name}" 
-                         onerror="this.src='https://via.placeholder.com/150?text=No+Image';">
-                    <h3>${product.brand}</h3>
-                    <p>${product.name}</p>
-                    ${formatPrice(product.price)}
-                </div>
+                <a href="/san-pham/${product.id}" class="product-link">
+                    <div class="product">
+                        <img src="${product.image}" alt="${product.name}" 
+                            onerror="this.src='https://via.placeholder.com/150?text=No+Image';">
+                        <h3>${product.brand}</h3>
+                        <p>${product.name}</p>
+                        ${formatPrice(product.price)}
+                    </div>
+                </a>
             `;
         });
     }
