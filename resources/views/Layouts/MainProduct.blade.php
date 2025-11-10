@@ -178,7 +178,7 @@
 
     /* Giá gốc */
     .price-section .original-price {
-        font-size: 14px;
+        font-size: 15px;
         color: #888;
         text-decoration: line-through;
         line-height: 1.2;
@@ -187,7 +187,7 @@
 
     /* Giá giảm */
     .price-section .discounted-price {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 700;
         color: #000;
         line-height: 1.2;

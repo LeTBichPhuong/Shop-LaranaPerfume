@@ -309,47 +309,42 @@ header {
 .product-section {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 20px; 
     padding: 50px 0;
 }
 
-/* Khung giá */
-.price-box,
-.price-container {
-    min-height: 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.product-box {
+    text-align: center;
+    width: 300px; 
 }
 
-.product-box img { 
-    width: 100%; 
-    transition: transform 0.3s; 
-    margin: 20px 0; 
-} 
+.product-box img {
+    width: 100%;
+    transition: transform 0.3s;
+    margin: 20px 0;
+}
 
-.product-box img:hover { 
+.product-box img:hover {
     transform: scale(1.05); 
-} 
+}
 
-.product-box h3 { 
-    font-size: 20px; 
-    margin: 10px 0; 
-} 
+.product-box h3 {
+    font-size: 20px;
+    margin: 10px 0;
+}
 
-.product-box a { 
-    display: inline-block; 
-    padding: 10px 20px; 
-    background-color: black; 
-    color: white; 
-    text-decoration: none; 
-    font-size: 16px; 
-    transition: background-color 0.3s; 
-} 
+.product-box a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
 
-.product-box a:hover { 
-    background-color: #333; 
+.product-box a:hover {
+    background-color: #333;
 }
 
 /* Giá gốc */
@@ -389,7 +384,6 @@ header {
     height: 180px;
     object-fit: contain;
 }
-
 
 /* Main */
 .main-section {
