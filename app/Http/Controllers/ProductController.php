@@ -154,29 +154,65 @@ class ProductController extends Controller
     }
 
     // phân biệt sản phẩm theo giới tính
+        // public function showByGender($gender) 
+        // {
+        //     $products = Product::with('brand')
+        //         ->where('gender', $gender)
+        //         ->paginate(12);
+            
+        //     $allBrands = Brand::has('products')->get();
+
+        //     $gender_map = [
+        //         'all' => 'Tất cả sản phẩm',
+        //         'nam' => 'Nước hoa nam',
+        //         'khac' => 'Nước hoa nữ', 
+        //         'unisex' => 'Nước hoa unisex'
+        //     ];
+            
+        //     $title = $gender_map[$gender] ?? 'SẢN PHẨM';
+        //     $description = "Bộ sưu tập " . strtolower($title) . " sang trọng, độc đáo từ Larana Perfume.";
+
+        //     return view('Layouts.MainProduct', [
+        //         'products' => $products,
+        //         'allBrands' => $allBrands, 
+        //         'title' => $title,
+        //         'description' => $description,
+        //         'active_gender' => $gender,
+        //     ]);
+        // }
     public function showByGender($gender) 
     {
+        // Map route gender -> database gender
+        $map = [
+            'nam' => 'Nam',
+            'unisex' => 'Unisex',
+            'khac' => 'Khác'
+        ];
+
+        // Nếu không tồn tại trong map thì trả về 404
+        if (!isset($map[$gender])) {
+            abort(404);
+        }
+
+        $dbGender = $map[$gender];
+
         $products = Product::with('brand')
-            ->where('gender', $gender)
+            ->where('gender', $dbGender)
             ->paginate(12);
-        
+
         $allBrands = Brand::has('products')->get();
 
         $gender_map = [
-            'all' => 'Tất cả sản phẩm',
             'nam' => 'Nước hoa nam',
-            'khac' => 'Nước hoa nữ', 
+            'khac' => 'Nước hoa nữ',
             'unisex' => 'Nước hoa unisex'
         ];
-        
-        $title = $gender_map[$gender] ?? 'SẢN PHẨM';
-        $description = "Bộ sưu tập " . strtolower($title) . " sang trọng, độc đáo từ Larana Perfume.";
 
         return view('Layouts.MainProduct', [
             'products' => $products,
             'allBrands' => $allBrands, 
-            'title' => $title,
-            'description' => $description,
+            'title' => $gender_map[$gender],
+            'description' => "Bộ sưu tập " . strtolower($gender_map[$gender]) . " sang trọng, độc đáo từ Larana Perfume.",
             'active_gender' => $gender,
         ]);
     }
