@@ -331,41 +331,43 @@
         overflow: hidden;   
     }
 
-    /* Khối giá */
+    /* Giá */
     .product-card .price-box {
+        min-height: 55px; 
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
         margin-top: 8px;
         padding: 0;
-        background: none;
     }
 
     /* Giá gốc */
     .product-card .price-box .original-price {
-        font-size: 13px;
+        font-size: 14px;
         color: #999;
         text-decoration: line-through;
-        display: block;
+        line-height: 1.2;
         margin-bottom: 4px;
     }
 
     /* Giá giảm */
     .product-card .price-box .discounted-price {
-        font-size: 16px;
+        font-size: 20px;
         font-weight: 700;
         color: #000;
+        line-height: 1.2;
     }
 
-    /* Khi có giảm giá */
+    /* Với sản phẩm giảm giá */
     .product-card .price-box .discounted-price.has-discount {
         color: #000;
     }
 
-    /* Khi KHÔNG có giảm giá */
+    /* Không có giảm giá */
     .product-card .price-box .discounted-price:not(.has-discount) {
-        color: #000;
+        margin-top: 6px;
     }
-
 
     /* RESPONSIVE */
     @media (max-width: 992px) {
