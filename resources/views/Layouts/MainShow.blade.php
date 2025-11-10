@@ -552,7 +552,7 @@
                                 <div class="price-box">
                                     @if(isset($product->original_price) && $product->original_price > $product->price)
                                         <div class="original-price">{{ $product->original_price }}</div>
-                                        <div class="discounted-price">{{ $product->price }}</div>
+                                        <div class="discounted-price has-discount">{{ $product->price }}</div>
                                     @else
                                         <div class="discounted-price">{{ $product->price }}</div>
                                     @endif

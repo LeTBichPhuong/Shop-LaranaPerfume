@@ -309,23 +309,28 @@ header {
 .product-section {
     display: flex;
     justify-content: center;
-    gap: 20px; 
+    gap: 20px;
     padding: 50px 0;
 }
 
-.product-box {
-    text-align: center;
-    width: 300px; 
+/* Khung giá */
+.price-box,
+.price-container {
+    min-height: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .product-box img {
     width: 100%;
-    transition: transform 0.3s;
+    transition: transform 0.3s ease;
     margin: 20px 0;
 }
 
 .product-box img:hover {
-    transform: scale(1.05); 
+    transform: scale(1.05);
 }
 
 .product-box h3 {
@@ -347,25 +352,44 @@ header {
     background-color: #333;
 }
 
-.discounted-price {
-    color: #000;
-    font-weight: 700;
-    font-size: 16px;
-}
-
+/* Giá gốc */
 .original-price {
     font-size: 13px;
     color: #999;
     text-decoration: line-through;
-    display: block;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
+    line-height: 1.2;
 }
 
-.no-discount {
+/* Giá giảm */
+.discounted-price {
     color: #000;
     font-weight: 700;
     font-size: 16px;
+    line-height: 1.2;
 }
+
+/* Khi chỉ có giá bán */
+.no-discount {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+}
+
+.slider .product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.slider .product img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+}
+
 
 /* Main */
 .main-section {

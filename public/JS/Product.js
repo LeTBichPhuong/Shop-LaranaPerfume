@@ -51,29 +51,26 @@ function getProductsByGender(data) {
 function formatPrice(priceStr) {
     if (!priceStr) return "";
 
-    // Tách theo dấu cách
-    const parts = priceStr.trim().split(" ");
+    // Tách tất cả giá tiền theo regex
+    const matches = priceStr.match(/[\d\.]+ ₫/g);
 
-    // Trường hợp có cả giá gốc và giá mới
-    if (parts.length > 2) {
-        const oldPrice = parts[0] + " " + parts[1];
-        const newPrice = parts.slice(2).join(" ");
-
+    if (matches && matches.length === 2) {
         return `
-            <div class="price-container product-card">
-                <span class="original-price">${oldPrice}</span>
-                <span class="discounted-price">${newPrice}</span>
+            <div class="price-box">
+                <span class="original-price">${matches[0]}</span>
+                <span class="discounted-price">${matches[1]}</span>
             </div>
         `;
     }
 
-    // Trường hợp không có giảm giá
+    // Nếu chỉ có 1 giá
     return `
-        <div class="price-container product-card">
-            <span class="no-discount">${priceStr}</span>
+        <div class="price-box">
+            <span class="discounted-price">${priceStr}</span>
         </div>
     `;
 }
+
 
 
 
@@ -92,10 +89,11 @@ function generateSliderHtml(products, tabId) {
             html += `
                 <a href="/san-pham/${product.name}" class="product-link" style="color:black;">
                     <div class="product">
-                        <img src="${product.image}" alt="${product.name}" 
+                        <img src="${product.image}" alt="${product.name}"
                             onerror="this.src='https://via.placeholder.com/150?text=No+Image';">
                         <h3>${product.brand}</h3>
                         <p>${product.name}</p>
+
                         ${formatPrice(product.price)}
                     </div>
                 </a>
