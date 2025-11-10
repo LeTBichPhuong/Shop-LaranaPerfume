@@ -281,14 +281,14 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 25px;
+        gap: 20px;
     }
 
     .featured-products .col-md-2 {
-        flex: 0 0 auto;
-        width: 250px; 
+        flex: 0 0 16.66%;
+        max-width: 16.66%;
+        padding: 0 10px;
     }
-
 
     /* sản phẩm nổi bật */
     .product-card {
@@ -310,7 +310,7 @@
 
     .product-card img {
         width: 100%;
-        height: 250px; 
+        height: 220px; 
         object-fit: contain;
         background: #fff;
     }
