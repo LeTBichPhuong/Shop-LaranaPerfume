@@ -294,79 +294,93 @@
         border: none;
         border-radius: 15px;
         transition: all 0.3s ease;
-        background: white;
+        background: #fff;
         overflow: hidden;
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+
+        /* Quan trọng – giữ chiều cao đều nhau */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
     }
 
+    /* Hover */
     .product-card:hover {
         transform: translateY(1px);
     }
 
+    /* Ảnh sản phẩm */
     .product-card img {
         width: 100%;
-        height: auto;
-        object-fit: cover;
+        height: 250px;                   /* ✅ chiều cao đồng nhất */
+        object-fit: contain;             /* ✅ không méo ảnh */
+        padding: 15px;
         transition: transform 0.3s ease;
     }
 
     .product-card:hover img {
-        transform: scale(1.1);
+        transform: scale(1.05);
     }
 
+    /* Nội dung */
     .product-card .card-body {
         padding: 15px;
         text-align: center;
+
+        /* Đẩy nội dung thành 1 khối chính giữa */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
+    /* Tiêu đề */
     .product-title {
         font-size: 14px;
         margin: 10px 0;
         color: #333;
         font-weight: 600;
-        min-height: 40px;
+        min-height: 38px;       
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
-        overflow: hidden;   
+        overflow: hidden;
     }
 
-    /* Giá */
+    /* --- GIÁ --- */
     .product-card .price-box {
-        min-height: 40px; 
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        margin-top: 8px;
-        padding: 0;
+        justify-content: center;     /* ✅ nằm giữa */
+        align-items: center;         /* ✅ đứng ngang */
+        gap: 8px;                    /* ✅ cách nhau */
+        min-height: 28px;
+        margin-top: 5px;
     }
 
     /* Giá gốc */
     .product-card .price-box .original-price {
-        font-size: 13px;
+        font-size: 14px;
         color: #999;
         text-decoration: line-through;
-        line-height: 1.2;
-        margin-bottom: 4px;
+        line-height: 1;
     }
 
     /* Giá giảm */
     .product-card .price-box .discounted-price {
-        font-size: 14px;
-        font-weight: 700;
+        font-size: 16px;
         color: #000;
-        line-height: 1.2;
+        font-weight: 700;
+        line-height: 1;
     }
 
-    /* Với sản phẩm giảm giá */
+    /* Không có giảm giá → đứng 1 mình */
+    .product-card .price-box .discounted-price:not(.has-discount) {
+        margin-top: 0;
+    }
+
+    /* Giảm giá */
     .product-card .price-box .discounted-price.has-discount {
         color: #000;
-    }
-
-    /* Không có giảm giá */
-    .product-card .price-box .discounted-price:not(.has-discount) {
-        margin-top: 6px;
     }
 
     /* RESPONSIVE */
@@ -549,8 +563,8 @@
                                 class="card-img-top" alt="{{ $item->name }}"
                                 onerror="this.onerror=null;this.src='https://placehold.co/200x200/e0e0e0/555?text=Product';">
                             <div class="card-body p-2 text-center">
+                                <h4 class="brand-title">{{ $product->brand->name ?? 'Không rõ' }}</h4>
                                 <h6 class="product-title">{{ \Illuminate\Support\Str::limit($item->name, 40) }}</h6>
-                                
                                 <div class="price-box">
                                     @if(isset($product->original_price) && $product->original_price > $product->price)
                                         <div class="original-price">{{ $product->original_price }}</div>

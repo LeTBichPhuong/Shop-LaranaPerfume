@@ -167,13 +167,15 @@
         -webkit-box-orient: vertical;
     }
 
-    /* Giá */
+    /* Giá*/
     .price-section {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-direction: row;
         align-items: center;
+        justify-content: center;
+        gap: 8px;
         text-align: center;
+        min-height: 28px;
     }
 
     /* Giá gốc */
@@ -181,8 +183,7 @@
         font-size: 15px;
         color: #888;
         text-decoration: line-through;
-        line-height: 1.2;
-        margin-bottom: 4px;
+        line-height: 1;
     }
 
     /* Giá giảm */
@@ -190,12 +191,12 @@
         font-size: 16px;
         font-weight: 700;
         color: #000;
-        line-height: 1.2;
+        line-height: 1;
     }
 
-    /* Khi KHÔNG có giảm giá */
+    /* Không có khuyến mãi*/
     .price-section .discounted-price:not(.has-discount) {
-        margin-top: 6px;
+        margin-top: 0;
     }
 
     /* Nút thêm giỏ hàng */
