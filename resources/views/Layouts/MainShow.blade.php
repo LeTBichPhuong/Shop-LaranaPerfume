@@ -290,7 +290,20 @@
         padding: 0 10px;
     }
 
-    /* sản phẩm nổi bật */
+   /* SẢN PHẨM NỔI BẬT */
+    .featured-products .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .featured-products .col-md-2 {
+        flex: 0 0 16.66%;
+        max-width: 16.66%;
+        padding: 0 10px;
+    }
+
     .product-card {
         border-radius: 15px;
         background: #fff;
@@ -298,8 +311,6 @@
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         transition: all 0.3s ease;
         width: 100%;
-        min-width: 240px;
-        max-width: 260px;
         display: flex;
         flex-direction: column;
     }
@@ -310,17 +321,11 @@
 
     .product-card img {
         width: 100%;
-        height: 220px; 
+        height: 220px;
         object-fit: contain;
         background: #fff;
     }
 
-
-    .product-card:hover img {
-        transform: scale(1.05);
-    }
-
-    /* Nội dung */
     .product-card .card-body {
         padding: 15px;
         text-align: center;
@@ -331,9 +336,8 @@
 
     .brand-title {
         font-size: 13px;
-        margin: 10px 0;
+        margin-top: 10px;
         color: #333;
-        text-decoration: none;
     }
 
     .product-title {
@@ -341,21 +345,21 @@
         margin: 10px 0;
         color: #333;
         font-weight: 600;
-        min-height: 38px;       
+        min-height: 38px;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
-    /* Gía */
+    /* GIÁ */
     .product-card .price-box {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 8px;
         min-height: 28px;
-        margin-top: 5px;
+        margin-top: 8px;
     }
 
     /* Giá gốc */
@@ -372,16 +376,6 @@
         color: #000;
         font-weight: 700;
         line-height: 1;
-    }
-
-    /* Không có giảm giá → đứng 1 mình */
-    .product-card .price-box .discounted-price:not(.has-discount) {
-        margin-top: 0;
-    }
-
-    /* Giảm giá */
-    .product-card .price-box .discounted-price.has-discount {
-        color: #000;
     }
 
     /* RESPONSIVE */
