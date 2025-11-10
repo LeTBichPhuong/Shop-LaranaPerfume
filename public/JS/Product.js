@@ -9,24 +9,41 @@ function showTab(category, event) {
 }
 
 // Phân loại theo giới tính
+// function getProductsByGender(data) {
+//     const categories = { nam: [], nu: [], unisex: [] };
+//     data.forEach(brand => {
+//         if (brand.products && Array.isArray(brand.products)) {
+//             brand.products.forEach(product => {
+//                 let category = 'nu';
+//                 if (product.gender === 'Nam') category = 'nam';
+//                 else if (product.gender === 'Unisex') category = 'unisex';
+
+//                 categories[category].push({
+//                     brand: product.brand || brand.name,
+//                     name: product.name,
+//                     price: product.price,
+//                     image: product.image
+//                 });
+//             });
+//         }
+//     });
+//     return categories;
+// }
 function getProductsByGender(data) {
     const categories = { nam: [], nu: [], unisex: [] };
-    data.forEach(brand => {
-        if (brand.products && Array.isArray(brand.products)) {
-            brand.products.forEach(product => {
-                let category = 'nu';
-                if (product.gender === 'Nam') category = 'nam';
-                else if (product.gender === 'Unisex') category = 'unisex';
 
-                categories[category].push({
-                    brand: product.brand || brand.name,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image
-                });
-            });
-        }
+    data.forEach(brand => {
+        brand.products.forEach(product => {
+
+            let gender = product.gender.toLowerCase();
+
+            if (gender === 'nam') categories.nam.push(product);
+            else if (gender === 'unisex') categories.unisex.push(product);
+            else categories.nu.push(product);
+
+        });
     });
+
     return categories;
 }
 
