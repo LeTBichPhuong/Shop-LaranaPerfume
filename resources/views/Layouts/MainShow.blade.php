@@ -253,7 +253,7 @@
     .featured-products {
         margin-top: 10px;
         text-align: center; 
-        padding-top: 30px;
+        padding: 0 50px;
         width: 100%;
     }
 
@@ -292,16 +292,15 @@
     }
 
     .product-card {
+        border: 1px solid #4a4a4c;
         border-radius: 15px;
         background: #fff;
         overflow: hidden;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         transition: all 0.3s ease;
-
         width: 100%;
         display: flex;
         flex-direction: column;
-        height: 100%;
+        height: auto;
     }
 
     .product-card:hover {
@@ -310,13 +309,13 @@
 
     .product-card img {
         width: 100%;
-        height: 260px;
+        height: 170px;
         object-fit: contain;
         background: #fff;
     }
 
     .product-card .card-body {
-        padding: 15px;
+        padding: 10px;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -531,10 +530,10 @@
         <h4 class="mb-4 text-center">Sản phẩm nổi bật</h4>
         <div class="row g-3">
             @php
-                // Lấy 12 sản phẩm ngẫu nhiên, trừ sản phẩm hiện tại
+                // Lấy 10 sản phẩm ngẫu nhiên, trừ sản phẩm hiện tại
                 $randomProducts = \App\Models\Product::inRandomOrder()
                     ->where('id', '!=', $product->id)
-                    ->take(12)
+                    ->take(10)
                     ->get();
             @endphp
 
