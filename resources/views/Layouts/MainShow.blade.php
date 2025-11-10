@@ -308,7 +308,8 @@
 
     .product-card img {
         width: 100%;
-        height: 170px;
+        height: 180px;
+        padding: 10px;
         object-fit: contain;
         background: #fff;
     }
@@ -332,7 +333,6 @@
         margin: 10px 0;
         color: #333;
         font-weight: 600;
-        min-height: 38px;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
