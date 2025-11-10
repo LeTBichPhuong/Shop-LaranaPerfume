@@ -289,9 +289,9 @@
         max-width: calc(16.66% - 20px);
     }
 
-    /* sản phẩm */
+    /* sản phẩm nổi bật */
     .product-card {
-        border: none;
+        border: #000;
         border-radius: 15px;
         transition: all 0.3s ease;
         background: #fff;
@@ -299,15 +299,16 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 100%;
+        width: 100%;
+        min-width: 230px;
+        max-width: 280px;
+        margin: auto;
     }
 
-    /* Hover */
     .product-card:hover {
         transform: translateY(1px);
     }
 
-    /* Ảnh sản phẩm */
     .product-card img {
         width: 100%;
         height: 250px;
@@ -326,10 +327,16 @@
         text-align: center;
         display: flex;
         flex-direction: column;
-        justify-content: left;
+        align-items: flex-start;
     }
 
-    /* Tiêu đề */
+    .brand-title {
+        font-size: 13px;
+        margin: 10px 0;
+        color: #333;
+        text-decoration: none;
+    }
+
     .product-title {
         font-size: 14px;
         margin: 10px 0;
@@ -342,7 +349,7 @@
         overflow: hidden;
     }
 
-    /* GIÁ */
+    /* Gía */
     .product-card .price-box {
         display: flex;
         justify-content: center;
