@@ -286,9 +286,8 @@
     }
 
     .featured-products .col-md-2 {
-        flex: 0 0 18%;
-        max-width: 18%;     
-        padding: 0 10px;
+        flex: 0 0 17%;
+        max-width: 20%;
     }
 
     .product-card {
