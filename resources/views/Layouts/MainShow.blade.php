@@ -296,9 +296,6 @@
         transition: all 0.3s ease;
         background: #fff;
         overflow: hidden;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-
-        /* Quan trọng – giữ chiều cao đều nhau */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -313,8 +310,8 @@
     /* Ảnh sản phẩm */
     .product-card img {
         width: 100%;
-        height: 250px;                   /* ✅ chiều cao đồng nhất */
-        object-fit: contain;             /* ✅ không méo ảnh */
+        height: 250px;
+        object-fit: contain;
         padding: 15px;
         transition: transform 0.3s ease;
     }
@@ -327,11 +324,9 @@
     .product-card .card-body {
         padding: 15px;
         text-align: center;
-
-        /* Đẩy nội dung thành 1 khối chính giữa */
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: left;
     }
 
     /* Tiêu đề */
@@ -347,12 +342,12 @@
         overflow: hidden;
     }
 
-    /* --- GIÁ --- */
+    /* GIÁ */
     .product-card .price-box {
         display: flex;
-        justify-content: center;     /* ✅ nằm giữa */
-        align-items: center;         /* ✅ đứng ngang */
-        gap: 8px;                    /* ✅ cách nhau */
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
         min-height: 28px;
         margin-top: 5px;
     }
@@ -563,7 +558,7 @@
                                 class="card-img-top" alt="{{ $item->name }}"
                                 onerror="this.onerror=null;this.src='https://placehold.co/200x200/e0e0e0/555?text=Product';">
                             <div class="card-body p-2 text-center">
-                                <h4 class="brand-title">{{ $product->brand->name ?? 'Không rõ' }}</h4>
+                                <h6 class="brand-title">{{ $product->brand->name ?? 'Không rõ' }}</h6>
                                 <h6 class="product-title">{{ \Illuminate\Support\Str::limit($item->name, 40) }}</h6>
                                 <div class="price-box">
                                     @if(isset($product->original_price) && $product->original_price > $product->price)
