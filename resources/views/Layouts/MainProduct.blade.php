@@ -147,17 +147,18 @@
     }
 
     .brand-title {
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #000;
+        font-size: 14px;
+        font-weight: 500;
+        color: black;
         text-transform: uppercase;
         margin-bottom: 2px;
         letter-spacing: 0.5px;
+        text-align: center;
     }
 
     .product-title {
-        font-size: 0.85rem;
-        font-weight: 600;
+        font-size: 13px;
+        font-weight: 500;
         color: #777777;
         margin-bottom: 4px;
         height: 2.2em;
@@ -165,6 +166,7 @@
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+        text-align: center;
     }
 
     /* Giá*/
@@ -175,14 +177,13 @@
         justify-content: center;
         gap: 8px;
         text-align: center;
-        min-height: 28px;
     }
 
     /* Giá gốc */
     .price-section .original-price {
         font-size: 15px;
         color: #888;
-        text-decoration: line-through;
+        text-decoration-line: line-through !important;
         line-height: 1;
     }
 
@@ -191,6 +192,7 @@
         font-size: 16px;
         font-weight: 700;
         color: #000;
+        text-decoration: none !important;
         line-height: 1;
     }
 

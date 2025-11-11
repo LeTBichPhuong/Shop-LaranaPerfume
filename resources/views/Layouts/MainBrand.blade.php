@@ -256,18 +256,20 @@
     }
 
     .brand-title {
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #666;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        color: black;
         text-transform: uppercase;
         margin-bottom: 2px;
         letter-spacing: 0.5px;
     }
 
     .product-title {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #333;
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+        color: #777777;
         margin-bottom: 4px;
         height: 2.2em;
         overflow: hidden;
@@ -279,24 +281,32 @@
     /* Giá */
     .price-section {
         display: flex;
-        flex-direction: column;
-        gap: 2px;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-align: center;
     }
 
-    .original-price {
-        color: #dc3545;
-        font-size: 0.8rem;
-        font-weight: 500;
-        margin: 0;
+    /* Giá gốc */
+    .price-section .original-price {
+        font-size: 15px;
+        color: #888;
         text-decoration: line-through;
+        line-height: 1;
     }
 
-    .discounted-price {
-        font-size: 0.95rem;
-        font-weight: bold;
+    /* Giá giảm */
+    .price-section .discounted-price {
+        font-size: 16px;
+        font-weight: 700;
         color: #000;
-        margin-top: 2px;
+        line-height: 1;
+    }
+
+    /* Không có khuyến mãi*/
+    .price-section .discounted-price:not(.has-discount) {
+        margin-top: 0;
     }
 
     /* Nút thêm giỏ hàng */
