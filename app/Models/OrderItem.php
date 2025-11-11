@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Helper\Helpers;
+use App\Helpers\Helpers;
 
 class OrderItem extends Model
 {

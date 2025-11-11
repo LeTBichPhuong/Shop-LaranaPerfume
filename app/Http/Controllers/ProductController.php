@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Helpers\PriceHelper;
 
 class ProductController extends Controller
 {
@@ -42,6 +43,25 @@ class ProductController extends Controller
         
         return view('Home');
     }
+
+    // Tách giá
+    private function parsePrice($priceString)
+    {
+        if (!$priceString) return [null, null];
+
+        $parts = preg_split('/đ/', $priceString);
+
+        $clean = fn($x) => (int) str_replace('.', '', trim($x));
+
+        if (count($parts) >= 2 && trim($parts[1]) !== '') {
+            return [
+                $clean($parts[0]),
+                $clean($parts[1])
+            ];
+        }
+
+        return [null, $clean($parts[0])];
+    }
     
     // Hiển thị danh sách sản phẩm 
     public function index(Request $request)
@@ -52,6 +72,10 @@ class ProductController extends Controller
         }
         $products = Product::all();
         $allBrands = Brand::all();
+
+        foreach ($products as $p) {
+            [$p->original_price, $p->final_price] = $this->parsePrice($p->price);
+        }
 
         return view('Layouts.MainProduct', [
             'products' => $products,
@@ -146,12 +170,27 @@ class ProductController extends Controller
 
     // Method show() cho chi tiết sản phẩm
     public function show(Product $product) {
-        $featuredProducts = Product::inRandomOrder()->where('id','!=',$product->id)->take(12)->get();
+
+        // Tách giá cho sản phẩm chính
+        [$product->original_price, $product->final_price] = $this->parsePrice($product->price);
+
+        // Lấy sản phẩm gợi ý
+        $featuredProducts = Product::inRandomOrder()
+            ->where('id', '!=', $product->id)
+            ->take(12)
+            ->get();
+
+        // Tách giá cho từng featured product
+        foreach ($featuredProducts as $p) {
+            [$p->original_price, $p->final_price] = $this->parsePrice($p->price);
+        }
+
         return view('Layouts.MainShow', [
             'product' => $product,
             'featuredProducts' => $featuredProducts
         ]);
     }
+
 
     // phân biệt sản phẩm theo giới tính
         // public function showByGender($gender) 
@@ -199,6 +238,10 @@ class ProductController extends Controller
         $products = Product::with('brand')
             ->where('gender', $dbGender)
             ->paginate(12);
+
+        foreach ($products as $p) {
+            [$p->original_price, $p->final_price] = $this->parsePrice($p->price);
+        }
 
         $allBrands = Brand::has('products')->get();
 
