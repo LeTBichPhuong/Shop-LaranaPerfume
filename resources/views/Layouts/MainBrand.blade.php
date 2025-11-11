@@ -371,18 +371,6 @@
         text-align: center;
     }
 
-    /* Thông tin sản phẩm (Brand name, Title, Price) */
-    .product-card a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .product-card .brand-title,
-    .product-card .product-title,
-    .product-card .price-section {
-        color: inherit !important;
-    }
-
     /* Responsive Design */
     @media (max-width: 992px) {
         .products-grid {
