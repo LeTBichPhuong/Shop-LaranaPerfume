@@ -289,7 +289,7 @@
 
     /* Giá gốc */
     .price-section .original-price {
-        font-size: 15px;
+        font-size: 13px;
         color: #888;
         text-decoration: line-through;
         line-height: 1;
@@ -297,8 +297,8 @@
 
     /* Giá khuyến mãi */
     .price-section .discounted-price {
-        font-size: 16px;
-        font-weight: 700;
+        font-size: 13px;
+        font-weight: 500;
         color: #000;
         text-decoration: none;
         line-height: 1;
