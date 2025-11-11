@@ -63,7 +63,9 @@
                                         <h5 class="product-title">{{ $product->name }}</h5>
                                         <div class="price-section">
                                             @if($product->original_price && $product->original_price > $product->final_price)
-                                                <div class="original-price">{{ number_format($product->original_price, 0, ',', '.') }} ₫</div>
+                                                <div class="original-price">
+                                                    {{ number_format($product->original_price, 0, ',', '.') }} ₫
+                                                </div>
                                                 <div class="discounted-price has-discount">
                                                     {{ number_format($product->final_price, 0, ',', '.') }} ₫
                                                 </div>
@@ -95,6 +97,7 @@
                     <p class="text-center text-muted">Không có sản phẩm phù hợp với bộ lọc này.</p>
                 </div>
             </div>
+            <!-- phân trang -->
         </div>
     </div>
 </div>
@@ -110,7 +113,7 @@
     }
     .row { 
         display: flex; 
-        gap: 30px; 
+        gap: 50px; 
         margin-top: 20px;
         margin-bottom: 20px;
         width: 100% !important; 
@@ -196,7 +199,7 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 15px;
-        margin-bottom: 30px;
+        margin: 40px 0;
     }
 
     .product-item {
@@ -231,10 +234,9 @@
 
     .card-img-top {
         width: 100%;
-        height: 220px;
         object-fit: contain;
         background: #fff;
-        padding: 10px;
+        padding: 5px;
         border-radius: 8px;
         transition: transform 0.3s ease;
     }
@@ -270,6 +272,7 @@
         color: black;
         text-transform: uppercase;
         margin-bottom: 2px;
+        height: 2.2em;
         letter-spacing: 0.5px;
     }
 
@@ -368,8 +371,48 @@
     }
 
     /* Phân trang */
-    .pagination-section {
-        display: none;
+    .pagination-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 30px 0;
+    }
+
+    .pagination {
+        display: flex;
+        gap: 8px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pagination .page-item .page-link {
+        padding: 10px 15px;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+        background: #fff;
+        color: #333;
+        font-weight: 500;
+        transition: all 0.25s ease;
+        font-size: 14px;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #111;
+        color: #fff;
+        border-color: #111;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    .pagination .page-item .page-link:hover {
+        background-color: #f5f5f5;
+        border-color: #bbb;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        opacity: 0.4;
+        cursor: not-allowed;
+        background-color: #fafafa;
     }
 
     /* Animation khi thêm vào giỏ */

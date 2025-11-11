@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use App\Helpers\PriceHelper;
 
 class BrandController extends Controller
 {
@@ -24,6 +25,21 @@ class BrandController extends Controller
     public function getJson()
     {
         return response()->json(Brand::select('id', 'name', 'logo')->get());
+    }
+
+    // tách giá
+    private function parsePrice($priceString)
+    {
+        if (!$priceString) return [null, null];
+
+        $parts = preg_split('/đ/', $priceString);
+        $clean = fn($x) => (int) str_replace('.', '', trim($x));
+
+        if (count($parts) >= 2 && trim($parts[1]) !== '') {
+            return [$clean($parts[0]), $clean($parts[1])];
+        }
+
+        return [null, $clean($parts[0])];
     }
 
     // Hiển thị trang chi tiết thương hiệu với sản phẩm (lấy thêm all brands cho sidebar)

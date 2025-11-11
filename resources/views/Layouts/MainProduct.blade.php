@@ -16,7 +16,7 @@
     }
     .row { 
         display: flex; 
-        gap: 30px; 
+        gap: 50px; 
         margin-top: 20px;
         margin-bottom: 20px;
         width: 100% !important; 
@@ -83,7 +83,7 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 15px;
-        margin-bottom: 30px;
+        margin: 40px 0;
     }
 
     .product-item {
@@ -118,10 +118,9 @@
 
     .card-img-top {
         width: 100%;
-        height: 220px;
         object-fit: contain;
         background: #fff;
-        padding: 10px;
+        padding: 5px;
         border-radius: 8px;
         transition: transform 0.3s ease;
     }
@@ -156,6 +155,7 @@
         color: black;
         text-transform: uppercase;
         margin-bottom: 2px;
+        height: 2.2em;
         letter-spacing: 0.5px;
         text-align: center;
     }
@@ -276,11 +276,14 @@
     .pagination {
         display: flex;
         gap: 6px;
+        list-style: none;
+        margin: 0 17%;
+        padding: 30px 0;
     }
 
     .pagination .page-item .page-link {
-        padding: 8px 14px;
-        border-radius: 6px;
+        padding: 9px 12px;
+        border-radius: 50px;
         border: 1px solid #ddd;
         color: #333;
         font-weight: 500;

@@ -72,8 +72,9 @@ class ProductController extends Controller
         }
 
         $products = Product::with('brand')->paginate(12);
+        $allBrands = Brand::has('products')->get();
         // $products = Product::all();
-        $allBrands = Brand::all();
+        // $allBrands = Brand::all();
 
         foreach ($products as $p) {
             [$p->original_price, $p->final_price] = $this->parsePrice($p->price);
@@ -84,6 +85,32 @@ class ProductController extends Controller
             'allBrands' => $allBrands,
             'title' => 'SẢN PHẨM',
             'description' => 'Khám phá bộ sưu tập nước hoa cao cấp từ Larana Perfume.',
+        ]);
+    }
+
+    // Lọc sản phẩm thêm thương hiệu
+    public function filterByBrand($brandId)
+    {
+        // Lấy thương hiệu
+        $brand = Brand::findOrFail($brandId);
+
+        // Lọc sản phẩm theo brand và phân trang
+        $products = Product::where('brand_id', $brandId)->paginate(12);
+
+        // Parse giá
+        foreach ($products as $p) {
+            [$p->original_price, $p->final_price] = $this->parsePrice($p->price);
+        }
+
+        // Lấy tất cả brand để hiển thị menu bên trái
+        $allBrands = Brand::has('products')->get();
+
+        return view('Layouts.MainProduct', [
+            'products' => $products,
+            'allBrands' => $allBrands,
+            'title' => 'Thương hiệu: ' . $brand->name,
+            'description' => 'Các sản phẩm đến từ thương hiệu ' . $brand->name,
+            'active_brand' => $brandId,
         ]);
     }
 
