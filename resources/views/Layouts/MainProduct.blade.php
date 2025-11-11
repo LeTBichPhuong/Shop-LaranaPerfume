@@ -108,11 +108,12 @@
     /* Ảnh sản phẩm */
     .product-image-wrapper {
         width: 100%;
-        height: 230px;
+        height: 220px;
         display: flex;
         align-items: center;
         justify-content: center;
         background: #fff;
+        border-bottom: 1px solid #ddd;
     }
 
 
@@ -131,14 +132,15 @@
         top: 10px;
         left: 10px;
         font-size: 24px;
-        color: #fff;
+        background-color: white;
+        border: #000;
         cursor: pointer;
         z-index: 11;
         transition: 0.3s ease;
     }
 
     .wishlist-icon.active {
-        color: #e63946 !important;
+        background-color: #e63946 !important;
     }
 
     /* giảm giá */
@@ -395,7 +397,7 @@
                 @forelse($products as $product)
                     <div class="product-item" data-gender="{{ $product->gender }}">
                         <div class="product-card card h-100">
-                            <i class="bx bx-heart wishlist-icon" onclick="toggleWishlist(this)"></i>
+                            <i class='bx bxs-heart' onclick="toggleWishlist(this)"></i>
                             <div class="product-image-wrapper">
                                 @if(isset($product->original_price) && $product->original_price > $product->price)
                                     <span class="discount-badge">Giảm giá</span>

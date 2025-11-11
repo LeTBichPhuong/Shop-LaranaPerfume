@@ -220,11 +220,12 @@
     /* Ảnh sản phẩm */
     .product-image-wrapper {
         width: 100%;
-        height: 230px;
+        height: 220px;
         display: flex;
         align-items: center;
         justify-content: center;
         background: #fff;
+        border-bottom: 1px solid #ddd;
     }
 
 
