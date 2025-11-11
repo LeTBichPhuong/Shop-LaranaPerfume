@@ -131,10 +131,9 @@
         position: absolute;
         top: 10px;
         right: 10px;
-        width: 40px;
-        height: 40px;
-        background: #777777;
-        border: 2px solid #000;
+        width: 30px;
+        height: 30px;
+        background: #d4d4d4;
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -144,15 +143,14 @@
     }
 
     .wishlist-icon {
-        font-size: 22px;
+        font-size: 18px;
         color: #fff;
         transition: color 0.2s ease;
     }
 
     .wishlist-icon.active {
-        color: #e63946 !important;
+        color: #c1232f !important;
     }
-
 
     /* giảm giá */
     .discount-badge {

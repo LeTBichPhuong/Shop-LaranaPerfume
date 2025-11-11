@@ -50,29 +50,36 @@
                 @forelse($products as $product)
                     <div class="product-item" data-gender="{{ $product->gender }}">
                         <div class="product-card card h-100">
-                            @if($product->original_price && $product->original_price != $product->price)
-                                <span class="discount-badge">Khuyến mãi</span>
-                            @endif
+                            
+                            <div class="product-imgage-wrapper">
+                                @if($product->original_price && $product->original_price != $product->price)
+                                    <span class="discount-badge">Khuyến mãi</span>
+                                @endif
 
-                            <div class="card-body">
+                                <div class="wishlist" onclick="toggleWishlist(this)">
+                                    <i class="bx bxs-heart wishlist-icon"></i>
+                                </div>
+
                                 <a href="{{ route('products.show', $product->name) }}" class="text-decoration-none">
                                     <img src="{{ $product->image ?? asset('img/placeholder-product.png') }}" class="card-img-top" alt="{{ $product->name }}" 
                                         onerror="this.onerror=null; this.src='https://placehold.co/300x300/e0e0e0/555?text=Product+Image'">
-                                    <div class="card-body">
-                                        <h4 class="brand-title">{{ $brand->name }}</h4>
-                                        <h5 class="product-title">{{ $product->name }}</h5>
-                                        <div class="price-section">
-                                            <div class="price-section">
-                                                @if($product->original_price && $product->original_price > $product->final_price)
-                                                    <div class="original-price">{{ number_format($product->original_price, 0, ',', '.') }} ₫</div>
-                                                    <div class="discounted-price has-discount">{{ number_format($product->final_price, 0, ',', '.') }} ₫</div>
-                                                @else
-                                                    <div class="discounted-price">{{ number_format($product->final_price, 0, ',', '.') }} ₫</div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
                                 </a>
+                            </div> 
+
+                            <div class="card-body">
+                                <h4 class="brand-title">{{ $brand->name }}</h4>
+                                <h5 class="product-title">{{ $product->name }}</h5>
+                                <div class="price-section">
+                                    <div class="price-section">
+                                        @if($product->original_price && $product->original_price > $product->final_price)
+                                            <div class="original-price">{{ number_format($product->original_price, 0, ',', '.') }} ₫</div>
+                                            <div class="discounted-price has-discount">{{ number_format($product->final_price, 0, ',', '.') }} ₫</div>
+                                        @else
+                                            <div class="discounted-price">{{ number_format($product->final_price, 0, ',', '.') }} ₫</div>
+                                        @endif
+                                    </div>
+                                </div>
+                            
                                 <!-- Nút thêm giỏ hàng -->
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST" style="margin: 0;">
                                     @csrf
@@ -238,7 +245,33 @@
         transition: transform 0.3s ease;
     }
 
-    /* Discount Badge */
+    /* icon yêu thích */
+    .wishlist {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background: #d4d4d4;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 30;
+    }
+
+    .wishlist-icon {
+        font-size: 18px;
+        color: #fff;
+        transition: color 0.2s ease;
+    }
+
+    .wishlist-icon.active {
+        color: #c1232f !important;
+    }
+
+    /* giảm giá */
     .discount-badge {
         position: absolute;
         top: 10px;
@@ -465,6 +498,12 @@
         });
     });
 
+    // Yêu thích
+    function toggleWishlist(el) {
+        const icon = el.querySelector(".wishlist-icon");
+        icon.classList.toggle("active");
+    }
+    
     // Filter giới tính
     document.addEventListener('DOMContentLoaded', function() {
         const genderButtons = document.querySelectorAll('.gender-btn');
