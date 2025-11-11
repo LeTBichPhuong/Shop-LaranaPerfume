@@ -126,22 +126,23 @@
         transition: transform 0.3s ease;
     }
 
-    /* yêu thích */
+    /* Icon yêu thích */
     .wishlist-icon {
         position: absolute;
         top: 10px;
         left: 10px;
         font-size: 24px;
-        background-color: white;
-        border: #000;
+        color: #ffffff; /* trắng mặc định */
         cursor: pointer;
         z-index: 11;
-        transition: 0.3s ease;
+        transition: color 0.3s ease;
     }
 
+    /* Khi người dùng ấn (active) -> đỏ */
     .wishlist-icon.active {
-        background-color: #e63946 !important;
+        color: #e63946 !important;
     }
+
 
     /* giảm giá */
     .discount-badge {
