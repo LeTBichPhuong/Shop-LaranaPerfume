@@ -51,7 +51,7 @@
                     <div class="product-item" data-gender="{{ $product->gender }}">
                         <div class="product-card card h-100">
                             
-                            <div class="product-imgage-wrapper">
+                            <div class="product-image-wrapper">
                                 @if($product->original_price && $product->original_price != $product->price)
                                     <span class="discount-badge">Khuyến mãi</span>
                                 @endif
