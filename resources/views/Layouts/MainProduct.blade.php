@@ -92,34 +92,38 @@
 
     .product-card {
         position: relative;
-        border: none;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
         border-radius: 8px;
         overflow: hidden;
-        transition: all 0.3s ease;
+        transition: transform 0.3s, box-shadow 0.3s;
         background: #fff;
     }
 
     .product-card:hover {
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
         transform: translateY(-2px);
+        border-color: #333; 
     }
 
     /* Ảnh sản phẩm */
     .product-image-wrapper {
-        position: relative;
-        overflow: hidden;
+        width: 100%;
+        height: 230px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
     }
+
 
     .card-img-top {
         width: 100%;
-        height: 180px;
-        object-fit: cover;
+        height: 220px;
+        object-fit: contain;
+        background: #fff;
+        padding: 10px;
+        border-radius: 8px;
         transition: transform 0.3s ease;
-    }
-
-    .product-card:hover .card-img-top {
-        transform: scale(1.05);
     }
 
     /* Discount Badge */
@@ -160,7 +164,8 @@
         font-size: 13px;
         font-weight: 500;
         color: #777777;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
+        height: 2.2em;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -180,7 +185,7 @@
 
     /* Giá gốc */
     .price-section .original-price {
-        font-size: 13px;
+        font-size: 14px;
         color: #888;
         text-decoration: line-through;
         line-height: 1;
@@ -188,8 +193,8 @@
 
     /* Giá khuyến mãi */
     .price-section .discounted-price {
-        font-size: 13px;
-        font-weight: 500;
+        font-size: 14px;
+        font-weight: 600;
         color: #000;
         text-decoration: none;
         line-height: 1;
