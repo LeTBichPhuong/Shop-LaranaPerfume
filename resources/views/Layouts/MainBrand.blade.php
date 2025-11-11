@@ -62,11 +62,15 @@
                                         <h4 class="brand-title">{{ $brand->name }}</h4>
                                         <h5 class="product-title">{{ $product->name }}</h5>
                                         <div class="price-section">
-                                            @if($product->original_price && $product->original_price != $product->price)
-                                                <div class="original-price">{{ $product->original_price }}</div>
-                                                <div class="discounted-price">{{ $product->price }}</div>
+                                            @if($product->original_price && $product->original_price > $product->final_price)
+                                                <div class="original-price">{{ number_format($product->original_price, 0, ',', '.') }} ₫</div>
+                                                <div class="discounted-price has-discount">
+                                                    {{ number_format($product->final_price, 0, ',', '.') }} ₫
+                                                </div>
                                             @else
-                                                <div class="discounted-price">{{ $product->price }}</div>
+                                                <div class="discounted-price">
+                                                    {{ number_format($product->final_price, 0, ',', '.') }} ₫
+                                                </div>
                                             @endif
                                         </div>
                                     </div>

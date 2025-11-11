@@ -70,7 +70,9 @@ class ProductController extends Controller
             $products = Product::with('brand')->get();
             return response()->json($products);
         }
-        $products = Product::all();
+
+        $products = Product::with('brand')->paginate(12);
+        // $products = Product::all();
         $allBrands = Brand::all();
 
         foreach ($products as $p) {

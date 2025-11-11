@@ -240,7 +240,7 @@
         font-size: 1rem;
     }
 
-    /* Empty State */
+    /* Thông báo nếu không có sản phẩm */
     .empty-state-default,
     .empty-state-filter {
         grid-column: 1 / -1;
@@ -253,6 +253,7 @@
         font-size: 1.1rem;
         margin: 0;
     }
+
     /* Animation khi thêm vào giỏ */
     @keyframes addToCart {
         0% { transform: scale(1); }
@@ -269,6 +270,31 @@
         grid-column: 1 / -1;
         padding: 60px 20px;
         text-align: center;
+    }
+
+    /* Phân trang */
+    .pagination {
+        display: flex;
+        gap: 6px;
+    }
+
+    .pagination .page-item .page-link {
+        padding: 8px 14px;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        color: #333;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #000;
+        color: #fff;
+        border-color: #000;
+    }
+
+    .pagination .page-item .page-link:hover {
+        background-color: #eee;
     }
 
     /* Responsive */
@@ -365,13 +391,11 @@
                                     <h4 class="brand-title">{{ $product->brand->name ?? 'Không rõ' }}</h4>
                                     <h5 class="product-title">{{ $product->name }}</h5>
                                     <div class="price-section">
-                                        {{-- Nếu có giảm giá --}}
                                         @if($product->original_price && $product->original_price > $product->final_price)
                                             <div class="original-price">{{ number_format($product->original_price, 0, ',', '.') }} ₫</div>
                                             <div class="discounted-price has-discount">
                                                 {{ number_format($product->final_price, 0, ',', '.') }} ₫
                                             </div>
-                                        {{-- Không giảm giá → chỉ có final_price --}}
                                         @else
                                             <div class="discounted-price">
                                                 {{ number_format($product->final_price, 0, ',', '.') }} ₫
@@ -399,6 +423,10 @@
                 <div class="empty-state-filter" style="display: none;">
                     <p class="text-center text-muted">Không có sản phẩm phù hợp với bộ lọc này.</p>
                 </div>
+            </div>
+            <!-- Phân trang -->
+            <div class="pagination-wrapper mt-4 d-flex justify-content-center">
+                {{ $products->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>
