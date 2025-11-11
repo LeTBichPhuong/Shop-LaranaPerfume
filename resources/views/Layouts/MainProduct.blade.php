@@ -348,8 +348,12 @@
                 <ul class="list-unstyled sidebar-list" id="brand-list-filter">
                     @forelse($allBrands as $relatedBrand)
                         <li>
-                            <a href="{{ route('brands.show', $relatedBrand->name) }}" class="sidebar-link">
+                            {{-- <a href="{{ route('brands.show', $relatedBrand->name) }}" class="sidebar-link">
                                 {{ $relatedBrand->name }}
+                            </a> --}}
+                            <a href="{{ route('products.list', ['brand' => $relatedBrand->id]) }}"
+                                class="sidebar-link {{ (isset($active_brand) && $active_brand == $relatedBrand->id) ? 'active' : '' }}">
+                                    {{ $relatedBrand->name }}
                             </a>
                         </li>
                     @empty
@@ -395,7 +399,9 @@
                                     <h5 class="product-title">{{ $product->name }}</h5>
                                     <div class="price-section">
                                         @if($product->original_price && $product->original_price > $product->final_price)
-                                            <div class="original-price">{{ number_format($product->original_price, 0, ',', '.') }} ₫</div>
+                                            <div class="original-price">
+                                                {{ number_format($product->original_price, 0, ',', '.') }} ₫
+                                            </div>
                                             <div class="discounted-price has-discount">
                                                 {{ number_format($product->final_price, 0, ',', '.') }} ₫
                                             </div>
@@ -429,7 +435,7 @@
             </div>
             <!-- Phân trang -->
             <div class="pagination-wrapper mt-4 d-flex justify-content-center">
-                {{ $products->links('pagination::bootstrap-4') }}
+                {{ $products->appends(request()->query())->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>
@@ -498,16 +504,6 @@
                 filterProducts();
             });
         });
-    });
-
-    // Optional: Highlight active page khi load (nếu cần)
-    document.addEventListener('DOMContentLoaded', function() {
-        const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
-        const activeLink = document.querySelector(`.page-link[href*='page=${currentPage}']`);
-        if (activeLink) {
-            activeLink.parentElement.classList.add('active');
-            activeLink.classList.add('active');  
-        }
     });
 
     // Hàm thêm vào giỏ hàng

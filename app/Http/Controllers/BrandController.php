@@ -33,26 +33,42 @@ class BrandController extends Controller
         if (!$priceString) return [null, null];
 
         $parts = preg_split('/đ/', $priceString);
+
         $clean = fn($x) => (int) str_replace('.', '', trim($x));
 
         if (count($parts) >= 2 && trim($parts[1]) !== '') {
-            return [$clean($parts[0]), $clean($parts[1])];
+            return [
+                $clean($parts[0]),
+                $clean($parts[1])
+            ];
         }
 
         return [null, $clean($parts[0])];
     }
 
-    // Hiển thị trang chi tiết thương hiệu với sản phẩm (lấy thêm all brands cho sidebar)
+    // Hiển thị trang chi tiết thương hiệu với sản phẩm
     public function show(Brand $brand)
     {
-        $products = Cache::remember("brand_{$brand->id}_products", 3600, function () use ($brand) {
+        // Lấy sản phẩm có phân trang
+        $products = Cache::remember("brand_{$brand->id}_products_page_" . request('page', 1), 3600, function () use ($brand) {
             return $brand->products()->with('brand')->paginate(12);
         });
 
-        // Lấy tất cả brands cho sidebar list (trừ brand hiện tại nếu muốn)
-        $allBrands = Brand::where('id', '!=', $brand->id)->orderBy('name')->get();
+        // tách giá
+        foreach ($products as $p) {
+            [$p->original_price, $p->final_price] = $this->parsePrice($p->price);
+        }
 
-        return view('Layouts.MainBrand', compact('brand', 'products', 'allBrands'));
+        // Lấy danh sách brand hiển thị sidebar
+        $allBrands = Brand::where('id', '!=', $brand->id)
+                        ->orderBy('name')
+                        ->get();
+
+        return view('Layouts.MainBrand', [
+            'brand'      => $brand,
+            'products'   => $products,
+            'allBrands'  => $allBrands
+        ]);
     }
 
     // API JSON sản phẩm cho brand cụ thể

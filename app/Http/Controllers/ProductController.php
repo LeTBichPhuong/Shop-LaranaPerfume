@@ -66,25 +66,44 @@ class ProductController extends Controller
     // Hiển thị danh sách sản phẩm 
     public function index(Request $request)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            $products = Product::with('brand')->get();
-            return response()->json($products);
+        $query = Product::with('brand');
+
+        // Lọc theo thương hiệu
+        if ($request->brand) {
+            $query->where('brand_id', $request->brand);
         }
 
-        $products = Product::with('brand')->paginate(12);
-        $allBrands = Brand::has('products')->get();
-        // $products = Product::all();
-        // $allBrands = Brand::all();
+        // Lọc theo giới tính (nếu bạn muốn giữ)
+        if ($request->gender && $request->gender !== 'all') {
+            $map = [
+                'nam' => 'Nam',
+                'unisex' => 'Unisex',
+                'khac' => 'Khác'
+            ];
 
+            if (isset($map[$request->gender])) {
+                $query->where('gender', $map[$request->gender]);
+            }
+        }
+
+        // Phân trang 12 sản phẩm
+        $products = $query->paginate(12)->appends($request->all());
+
+        // Parse giá cho từng sản phẩm
         foreach ($products as $p) {
             [$p->original_price, $p->final_price] = $this->parsePrice($p->price);
         }
+
+        // Lấy list brand cho sidebar
+        $allBrands = Brand::has('products')->get();
 
         return view('Layouts.MainProduct', [
             'products' => $products,
             'allBrands' => $allBrands,
             'title' => 'SẢN PHẨM',
-            'description' => 'Khám phá bộ sưu tập nước hoa cao cấp từ Larana Perfume.',
+            'description' => 'Bộ sưu tập sản phẩm cao cấp Larana Perfume',
+            'active_gender' => $request->gender ?? 'all',
+            'active_brand' => $request->brand ?? null,
         ]);
     }
 
