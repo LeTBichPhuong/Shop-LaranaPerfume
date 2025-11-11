@@ -126,19 +126,29 @@
         transition: transform 0.3s ease;
     }
 
-    /* Icon yêu thích */
-    .wishlist-icon {
+    /* icon yêu thích */
+    .wishlist {
         position: absolute;
         top: 10px;
-        left: 10px;
-        font-size: 24px;
-        color: #ffffff; /* trắng mặc định */
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        background: #777777;
+        border: 2px solid #000;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
-        z-index: 11;
-        transition: color 0.3s ease;
+        z-index: 30;
     }
 
-    /* Khi người dùng ấn (active) -> đỏ */
+    .wishlist-icon {
+        font-size: 22px;
+        color: #fff;
+        transition: color 0.2s ease;
+    }
+
     .wishlist-icon.active {
         color: #e63946 !important;
     }
@@ -398,12 +408,16 @@
                 @forelse($products as $product)
                     <div class="product-item" data-gender="{{ $product->gender }}">
                         <div class="product-card card h-100">
-                            <i class='bx bxs-heart' onclick="toggleWishlist(this)"></i>
+
                             <div class="product-image-wrapper">
                                 @if(isset($product->original_price) && $product->original_price > $product->price)
                                     <span class="discount-badge">Giảm giá</span>
                                 @endif
-                                
+
+                                <div class="wishlist" onclick="toggleWishlist(this)">
+                                    <i class="bx bxs-heart wishlist-icon"></i>
+                                </div>
+
                                 <a href="{{ route('products.show', $product->name) }}" class="text-decoration-none">
                                     <img src="{{ $product->image ?? asset('img/placeholder-product.png') }}" class="card-img-top" alt="{{ $product->name }}" 
                                         onerror="this.onerror=null; this.src='https://placehold.co/300x300/e0e0e0/555?text=Product+Image'">
@@ -524,9 +538,11 @@
     });
 
     // Yêu thích
-    function toggleWishlist(icon) {
-        icon.classList.toggle('active');
+    function toggleWishlist(el) {
+        const icon = el.querySelector(".wishlist-icon");
+        icon.classList.toggle("active");
     }
+
     // Hàm thêm vào giỏ hàng
     async function addToCart(productId, button) {
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
