@@ -290,27 +290,24 @@
     /* Giá gốc */
     .price-section .original-price {
         font-size: 15px;
-        color: #888 !important;
-        text-decoration: line-through !important;
-        -webkit-text-decoration-line: line-through !important;
+        color: #888;
+        text-decoration: line-through;
         line-height: 1;
     }
 
-    /* Giá giảm */
+    /* Giá khuyến mãi */
     .price-section .discounted-price {
         font-size: 16px;
         font-weight: 700;
-        color: #000 !important;
-        text-decoration: none !important;
-        -webkit-text-decoration: none !important;
+        color: #000;
+        text-decoration: none;
         line-height: 1;
     }
 
-    /* Không có khuyến mãi */
+    /* Khi sản phẩm không có giảm giá */
     .price-section .discounted-price:not(.has-discount) {
         margin-top: 0;
     }
-
 
     /* Nút thêm giỏ hàng */
     .add-to-cart-btn {
