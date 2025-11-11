@@ -264,7 +264,6 @@
     .brand-title {
         font-size: 14px;
         font-weight: 500;
-        text-align: center;
         color: black;
         text-transform: uppercase;
         margin-bottom: 2px;
@@ -275,7 +274,6 @@
     .product-title {
         font-size: 13px;
         font-weight: 500;
-        text-align: center;
         color: #777777;
         margin-bottom: 4px;
         height: 2.2em;
@@ -290,9 +288,8 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 8px;
-        text-align: center;
     }
 
     /* Giá gốc */

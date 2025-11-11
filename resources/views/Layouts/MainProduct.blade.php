@@ -125,7 +125,23 @@
         transition: transform 0.3s ease;
     }
 
-    /* Discount Badge */
+    /* yêu thích */
+    .wishlist-icon {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 24px;
+        color: #fff;
+        cursor: pointer;
+        z-index: 11;
+        transition: 0.3s ease;
+    }
+
+    .wishlist-icon.active {
+        color: #e63946 !important;
+    }
+
+    /* giảm giá */
     .discount-badge {
         position: absolute;
         top: 10px;
@@ -157,7 +173,6 @@
         margin-bottom: 2px;
         height: 2.2em;
         letter-spacing: 0.5px;
-        text-align: center;
     }
 
     .product-title {
@@ -170,7 +185,6 @@
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
-        text-align: center;
     }
 
     /* Giá */
@@ -178,7 +192,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 8px;
         text-align: center;
     }
@@ -381,7 +395,7 @@
                 @forelse($products as $product)
                     <div class="product-item" data-gender="{{ $product->gender }}">
                         <div class="product-card card h-100">
-                            
+                            <i class="bx bx-heart wishlist-icon" onclick="toggleWishlist(this)"></i>
                             <div class="product-image-wrapper">
                                 @if(isset($product->original_price) && $product->original_price > $product->price)
                                     <span class="discount-badge">Giảm giá</span>
@@ -506,6 +520,10 @@
         });
     });
 
+    // Yêu thích
+    function toggleWishlist(icon) {
+        icon.classList.toggle('active');
+    }
     // Hàm thêm vào giỏ hàng
     async function addToCart(productId, button) {
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
