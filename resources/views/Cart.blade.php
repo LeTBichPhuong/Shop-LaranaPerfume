@@ -111,11 +111,11 @@
                                 <h5 class="total-title">Tổng cộng giỏ hàng</h5>
                                 <div class="summary-row">
                                     <span class="label">Tạm tính:</span>
-                                    <span class="value">{{ \App\Helper\helpers::format($total) }}</span>
+                                    <span class="value">{{ \App\Helpers\PriceHelper::format($total) }}</span>
                                 </div>
                                 <div class="summary-row">
                                     <span class="label">Tổng:</span>
-                                    <span class="value">{{ \App\Helper\helpers::format($total) }}</span>
+                                    <span class="value">{{ \App\Helpers\PriceHelper::format($total) }}</span>
                                 </div>
                             </div>
                         </div>

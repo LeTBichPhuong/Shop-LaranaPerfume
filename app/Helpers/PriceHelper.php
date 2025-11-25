@@ -21,4 +21,9 @@ class PriceHelper
 
         return [null, $clean($parts[0])];
     }
+
+    public static function format($number)
+    {
+        return number_format($number, 0, ',', '.') . ' ₫';
+    }
 }
