@@ -83,7 +83,7 @@
                                         </td>
                                         <td><strong>{{ $item->product_name }}</strong></td>
                                         <td class="price" data-price="{{ $item->price_numeric }}" data-price-raw="{{ $item->price }}">
-                                            <span class="text-danger fw-bold">{{ \App\Helper\helpers::format($item->price_numeric) }}</span>
+                                            <span class="text-danger fw-bold">{{ \App\Helpers\helpers::format($item->price_numeric) }}</span>
                                         </td>
                                         <td>
                                             <input type="number" 
@@ -94,7 +94,7 @@
                                                    style="width: 80px;">
                                         </td>
                                         <td class="subtotal">
-                                            <span class="fw-bold">{{ \App\Helper\helpers::format($item->subtotal) }}</span>
+                                            <span class="fw-bold">{{ \App\Helpers\helpers::format($item->subtotal) }}</span>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-sm remove-item" data-id="{{ $item->id }}">
@@ -111,11 +111,11 @@
                                 <h5 class="total-title">Tổng cộng giỏ hàng</h5>
                                 <div class="summary-row">
                                     <span class="label">Tạm tính:</span>
-                                    <span class="value">{{ \App\Helpers\PriceHelper::format($total) }}</span>
+                                    <span class="value">{{ \App\Helpers\helpers::format($total) }}</span>
                                 </div>
                                 <div class="summary-row">
                                     <span class="label">Tổng:</span>
-                                    <span class="value">{{ \App\Helpers\PriceHelper::format($total) }}</span>
+                                    <span class="value">{{ \App\Helpers\helpers::format($total) }}</span>
                                 </div>
                             </div>
                         </div>
