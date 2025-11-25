@@ -86,10 +86,11 @@ class ProductController extends Controller
             }
         }
 
-        // Phân trang 12 sản phẩm
-        $products = $query->paginate(12)->appends($request->all());
+        // Lấy toàn bộ san phẩm
+        $products = $query->get(); 
 
         // Parse giá cho từng sản phẩm
+        /** @var \App\Models\Product $p */
         foreach ($products as $p) {
             [$p->original_price, $p->final_price] = $this->parsePrice($p->price);
         }
@@ -285,8 +286,9 @@ class ProductController extends Controller
 
         $products = Product::with('brand')
             ->where('gender', $dbGender)
-            ->paginate(12);
+            ->get();
 
+        /** @var \App\Models\Product $p */
         foreach ($products as $p) {
             [$p->original_price, $p->final_price] = $this->parsePrice($p->price);
         }

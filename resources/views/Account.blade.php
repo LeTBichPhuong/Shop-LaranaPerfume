@@ -89,7 +89,7 @@
                                     <h3>Đơn hàng #{{ $order->id }}</h3>
                                     <p class="order-date">
                                         <i class="fa fa-calendar"></i> 
-                                        Ngày đặt: {{ $order->created_at->format('d/m/Y H:i') }}
+                                        Ngày đặt: {{ $order->created_at->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}
                                     </p>
                                 </div>
                                 <div class="order-status">
@@ -143,10 +143,10 @@
                                                 x{{ $item->quantity }}
                                             </td>
                                             <td>
-                                                {{ $item->price_formatted }}
+                                                {{ \App\Helpers\Helpers::format($order->total) }}
                                             </td>
                                             <td>
-                                                <strong>{{ $item->subtotal_formatted }}</strong>
+                                                <strong>{{ \App\Helpers\Helpers::format($order->total) }}</strong>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -171,7 +171,7 @@
                                 </div>
                                 <div class="order-total">
                                     <span>Tổng cộng:</span>
-                                    <strong class="text-danger">{{ $order->total_formatted }}</strong>
+                                    <strong class="text-danger">{{ \App\Helpers\Helpers::format($order->total) }}</strong>
                                 </div>
                                 
                                 @if($order->status == 'pending')

@@ -44,8 +44,7 @@ class Order extends Model
      */
     public function getTotalFormattedAttribute(): string
     {
-        $total = Helpers::parse($this->total);
-        return Helpers::format($total);
+        return Helpers::format((float)$this->total);
     }
 
     /**

@@ -26,8 +26,7 @@ class OrderItem extends Model
      */
     public function getPriceFormattedAttribute(): string
     {
-        $price = Helpers::parse($this->price);
-        return Helpers::format($price);
+        return Helpers::format((float) $this->price);
     }
 
     /**
@@ -35,10 +34,10 @@ class OrderItem extends Model
      */
     public function getSubtotalFormattedAttribute(): string
     {
-        $price = Helpers::parse($this->price);
-        $subtotal = $price * (int) $this->quantity;
+        $subtotal = ((float)$this->price) * (int)$this->quantity;
         return Helpers::format($subtotal);
     }
+
 
     /**
      * Mutator: Trước khi lưu vào DB, luôn chuyển giá tiền thành số thực

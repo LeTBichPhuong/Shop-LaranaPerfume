@@ -297,34 +297,6 @@
         text-align: center;
     }
 
-    /* Phân trang */
-    .pagination {
-        display: flex;
-        gap: 6px;
-        list-style: none;
-        margin: 0 17%;
-        padding: 30px 0;
-    }
-
-    .pagination .page-item .page-link {
-        padding: 9px 12px;
-        border-radius: 50px;
-        border: 1px solid #ddd;
-        color: #333;
-        font-weight: 500;
-        transition: 0.2s;
-    }
-
-    .pagination .page-item.active .page-link {
-        background-color: #000;
-        color: #fff;
-        border-color: #000;
-    }
-
-    .pagination .page-item .page-link:hover {
-        background-color: #eee;
-    }
-
     /* Responsive */
     @media (max-width: 1200px) {
         .products-grid {
@@ -461,10 +433,6 @@
                 <div class="empty-state-filter" style="display: none;">
                     <p class="text-center text-muted">Không có sản phẩm phù hợp với bộ lọc này.</p>
                 </div>
-            </div>
-            <!-- Phân trang -->
-            <div class="pagination-wrapper mt-4 d-flex justify-content-center">
-                {{ $products->appends(request()->query())->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>
