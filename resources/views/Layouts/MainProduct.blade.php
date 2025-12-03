@@ -297,6 +297,63 @@
         text-align: center;
     }
 
+    /* Toast container */
+    #toast-container {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Toast item */
+    .toast {
+        min-width: 250px;
+        padding: 14px 18px;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 15px;
+        background: #2b2b2b; /* xám đậm mặc định */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        transform: translateX(50px);
+        animation: toastSlideIn 0.3s ease forwards, toastFadeOut 0.35s ease forwards 3s;
+    }
+
+    /* Success: trắng - xanh nhẹ */
+    .toast.success {
+        background: #3a3a3a; 
+        border-left: 5px solid #7fff7f;
+    }
+
+    /* Error: trắng - đỏ xám */
+    .toast.error {
+        background: #3a3a3a;
+        border-left: 5px solid #ff6b6b;
+    }
+
+    /* Animation */
+    @keyframes toastSlideIn {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes toastFadeOut {
+        to {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+    }
+
+
     /* Responsive */
     @media (max-width: 1200px) {
         .products-grid {
@@ -437,6 +494,8 @@
         </div>
     </div>
 </div>
+<div id="toast-container"></div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -514,7 +573,7 @@
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
         
         if (!csrfToken) {
-            alert('Lỗi bảo mật! Vui lòng tải lại trang.');
+            showErrorToast('Lỗi bảo mật! Vui lòng tải lại trang.');
             return;
         }
         
@@ -534,25 +593,25 @@
                 credentials: 'same-origin' 
             });
             
-            // Kiểm tra nếu bị redirect về login (401 hoặc 302)
+            // Kiểm tra nếu bị redirect về login
             if (res.status === 401 || res.redirected) {
-                alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
+                showErrorToast('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
                 window.location.href = '/dang-nhap';
                 return;
             }
             
-            // Kiểm tra lỗi 419 (CSRF)
+            // Lỗi 419
             if (res.status === 419) {
-                alert('Phiên làm việc đã hết hạn. Vui lòng tải lại trang!');
+                showErrorToast('Phiên làm việc đã hết hạn. Vui lòng tải lại trang!');
                 location.reload();
                 return;
             }
             
-            // Kiểm tra lỗi 500
+            // Lỗi 500
             if (res.status === 500) {
                 const text = await res.text();
                 console.error('Server error:', text);
-                alert('Lỗi server! Vui lòng kiểm tra console.');
+                showErrorToast('Lỗi server! Vui lòng kiểm tra console.');
                 button.classList.remove('adding');
                 button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
                 button.disabled = false;
@@ -562,7 +621,8 @@
             const data = await res.json();
             
             if (data.success) {
-                // Hiển thị thông báo thành công
+                showSuccessToast('Đã thêm sản phẩm vào giỏ hàng!');
+
                 button.innerHTML = '<i class="fa fa-check"></i> Đã thêm';
                 setTimeout(() => {
                     button.classList.remove('adding');
@@ -570,18 +630,41 @@
                     button.disabled = false;
                 }, 1500);
             } else {
-                alert(data.message || 'Có lỗi xảy ra!');
+                showErrorToast(data.message || 'Có lỗi xảy ra!');
                 button.classList.remove('adding');
                 button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
                 button.disabled = false;
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Có lỗi xảy ra! Vui lòng kiểm tra console để biết chi tiết.');
+            showErrorToast('Có lỗi xảy ra! Vui lòng kiểm tra console.');
             button.classList.remove('adding');
             button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
             button.disabled = false;
         }
     }
+    function showSuccessToast(message) {
+        showToast(message, 'success');
+    }
+
+    function showErrorToast(message) {
+        showToast(message, 'error');
+    }
+
+    function showToast(message, type) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+
+        toast.classList.add('toast', type);
+        toast.textContent = message;
+
+        container.appendChild(toast);
+
+        // Tự xoá
+        setTimeout(() => {
+            toast.remove();
+        }, 3500);
+    }
+
 </script>
 @endsection
