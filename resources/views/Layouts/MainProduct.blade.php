@@ -308,51 +308,38 @@
         gap: 10px;
     }
 
-    /* Toast item */
+    #toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 99999;
+    }
+
     .toast {
-        min-width: 250px;
+        min-width: 260px;
         padding: 14px 18px;
+        margin-bottom: 10px;
         border-radius: 6px;
-        color: #fff;
-        font-size: 15px;
-        background: #2b2b2b; /* xám đậm mặc định */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        font-size: 14px;
+        color: white;
+        background: #333;
         opacity: 0;
-        transform: translateX(50px);
-        animation: toastSlideIn 0.3s ease forwards, toastFadeOut 0.35s ease forwards 3s;
+        transform: translateX(100%);
+        animation: slideIn 0.4s forwards, fadeOut 0.5s 2.8s forwards;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.25);
     }
 
-    /* Success: trắng - xanh nhẹ */
-    .toast.success {
-        background: #3a3a3a; 
-        border-left: 5px solid #7fff7f;
+    .toast.success { background: #4caf50; }
+    .toast.error { background: #e74c3c; }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(100%); }
+        to   { opacity: 1; transform: translateX(0); }
     }
 
-    /* Error: trắng - đỏ xám */
-    .toast.error {
-        background: #3a3a3a;
-        border-left: 5px solid #ff6b6b;
+    @keyframes fadeOut {
+        to   { opacity: 0; transform: translateX(100%); }
     }
-
-    /* Animation */
-    @keyframes toastSlideIn {
-        from {
-            opacity: 0;
-            transform: translateX(50px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes toastFadeOut {
-        to {
-            opacity: 0;
-            transform: translateX(50px);
-        }
-    }
-
 
     /* Responsive */
     @media (max-width: 1200px) {
@@ -380,6 +367,7 @@
 @endpush
 
 @section('master')
+<div id="toast-container"></div>
 <div class="container my-5">
     <!-- Header trang sản phẩm -->
     <div class="brand-header text-center mb-5">
@@ -472,7 +460,7 @@
                                 </a>
                                 
                                 <!-- Nút thêm giỏ hàng -->
-                                <form action="{{ route('cart.add', $product->id) }}" method="POST" style="margin: 0;">
+                                <form action="{{ route('cart.add', $product->id) }}" method="POST" class="add-to-cart-form" style="margin: 0;">
                                     @csrf
                                     <button type="submit" class="add-to-cart-btn">
                                         <i class="fa fa-shopping-cart"></i>
@@ -494,8 +482,6 @@
         </div>
     </div>
 </div>
-<div id="toast-container"></div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -506,7 +492,6 @@
         const emptyStateFilter = document.querySelector('.empty-state-filter');
         const pagination = document.querySelector('.pagination-basic');
 
-        // Biến lưu trạng thái hiện tại
         let selectedGender = 'all';
         let selectedBrand = null;
 
@@ -528,19 +513,12 @@
                 }
             });
 
-            // Hiển thị trạng thái trống
             if (emptyStateFilter) {
-                if (visibleCount === 0) {
-                    emptyStateFilter.style.display = 'block';
-                    if (pagination) pagination.style.display = 'none';
-                } else {
-                    emptyStateFilter.style.display = 'none';
-                    if (pagination) pagination.style.display = '';
-                }
+                emptyStateFilter.style.display = (visibleCount === 0 ? 'block' : 'none');
+                if (pagination) pagination.style.display = (visibleCount === 0 ? 'none' : '');
             }
         }
 
-        // Sự kiện lọc giới tính
         genderButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 genderButtons.forEach(b => b.classList.remove('active'));
@@ -550,7 +528,6 @@
             });
         });
 
-        // Sự kiện lọc thương hiệu
         brandLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -560,89 +537,77 @@
                 filterProducts();
             });
         });
-    });
 
-    // Yêu thích
-    function toggleWishlist(el) {
-        const icon = el.querySelector(".wishlist-icon");
-        icon.classList.toggle("active");
-    }
+        // ============================
+        // 🚀 CHẶN SUBMIT FORM + AJAX
+        // ============================
+        const cartForms = document.querySelectorAll('form[action*="cart"], form[action*="gio-hang"], .add-to-cart-form');
 
-    // Hàm thêm vào giỏ hàng
-    async function addToCart(productId, button) {
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-        
-        if (!csrfToken) {
-            showErrorToast('Lỗi bảo mật! Vui lòng tải lại trang.');
-            return;
-        }
-        
-        // Animation nút
-        button.classList.add('adding');
-        button.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Đang thêm...';
-        button.disabled = true;
-        
-        try {
-            const res = await fetch(`/gio-hang/add/${productId}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                credentials: 'same-origin' 
-            });
-            
-            // Kiểm tra nếu bị redirect về login
-            if (res.status === 401 || res.redirected) {
-                showErrorToast('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
-                window.location.href = '/dang-nhap';
-                return;
-            }
-            
-            // Lỗi 419
-            if (res.status === 419) {
-                showErrorToast('Phiên làm việc đã hết hạn. Vui lòng tải lại trang!');
-                location.reload();
-                return;
-            }
-            
-            // Lỗi 500
-            if (res.status === 500) {
-                const text = await res.text();
-                console.error('Server error:', text);
-                showErrorToast('Lỗi server! Vui lòng kiểm tra console.');
-                button.classList.remove('adding');
-                button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
-                button.disabled = false;
-                return;
-            }
-            
-            const data = await res.json();
-            
-            if (data.success) {
-                showSuccessToast('Đã thêm sản phẩm vào giỏ hàng!');
+        cartForms.forEach(form => {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault(); // Ngăn reload trang
 
-                button.innerHTML = '<i class="fa fa-check"></i> Đã thêm';
-                setTimeout(() => {
+                const button = form.querySelector('.add-to-cart-btn');
+                const action = form.getAttribute('action');
+                const formData = new FormData(form);
+
+                button.classList.add('adding');
+                button.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Đang thêm...';
+                button.disabled = true;
+
+                try {
+                    const res = await fetch(action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (res.status === 401 || res.redirected) {
+                        showErrorToast('Vui lòng đăng nhập để tiếp tục!');
+                        window.location.href = '/dang-nhap';
+                        return;
+                    }
+
+                    if (res.status === 419) {
+                        showErrorToast('Phiên làm việc hết hạn! Vui lòng tải lại trang.');
+                        location.reload();
+                        return;
+                    }
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        showSuccessToast('Đã thêm sản phẩm vào giỏ hàng!');
+                        button.innerHTML = '<i class="fa fa-check"></i> Đã thêm';
+
+                        setTimeout(() => {
+                            button.classList.remove('adding');
+                            button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
+                            button.disabled = false;
+                        }, 1500);
+
+                    } else {
+                        showErrorToast(data.message || 'Không thể thêm sản phẩm!');
+                        button.classList.remove('adding');
+                        button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
+                        button.disabled = false;
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                    showErrorToast('Lỗi kết nối server!');
                     button.classList.remove('adding');
                     button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
                     button.disabled = false;
-                }, 1500);
-            } else {
-                showErrorToast(data.message || 'Có lỗi xảy ra!');
-                button.classList.remove('adding');
-                button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
-                button.disabled = false;
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            showErrorToast('Có lỗi xảy ra! Vui lòng kiểm tra console.');
-            button.classList.remove('adding');
-            button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
-            button.disabled = false;
-        }
-    }
+                }
+            });
+        });
+
+    });
+
     function showSuccessToast(message) {
         showToast(message, 'success');
     }
@@ -660,11 +625,10 @@
 
         container.appendChild(toast);
 
-        // Tự xoá
         setTimeout(() => {
             toast.remove();
         }, 3500);
     }
-
 </script>
+
 @endsection
