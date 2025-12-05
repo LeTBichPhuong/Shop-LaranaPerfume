@@ -252,22 +252,20 @@
     /* SẢN PHẨM NỔI BẬT */
     .featured-products {
         margin-top: 10px;
-        text-align: center; 
+        text-align: center;
         padding: 10px 50px 80px;
         width: 100%;
     }
-
     .featured-products h4 {
         font-weight: 700;
         font-size: 24px;
         margin-bottom: 40px;
-        padding-bottom: 10px; 
+        padding-bottom: 10px;
         color: #222;
         position: relative;
         display: inline-block;
         border-bottom: 3px solid #4a4a4c;
     }
-
     .featured-products h4::after {
         content: '';
         position: absolute;
@@ -278,58 +276,63 @@
         height: 4px;
         border-radius: 2px;
     }
-
     .featured-products .row {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         gap: 20px;
     }
-
     .featured-products .col-md-2 {
         flex: 0 0 17%;
         max-width: 20%;
     }
 
-    .product-card {
-        border: 1px solid #4a4a4c;
-        border-radius: 15px;
-        background: #fff;
-        overflow: hidden;
-        transition: all 0.3s ease;
+    /* Products Grid */
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin: 40px 0;
+    }
+    .product-item {
         width: 100%;
+    }
+    .product-card {
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        background: #fff;
+        height: 350px;
         display: flex;
         flex-direction: column;
-        height: auto;
     }
-
     .product-card:hover {
-        transform: translateY(1px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+        border-color: #333;
     }
-
     .product-card img {
         width: 100%;
         height: 180px;
         padding: 10px;
         object-fit: contain;
-        background: #fff;
+        flex-shrink: 0;
     }
-
     .product-card .card-body {
-        padding: 10px;
+        padding: 0 10px;
         text-align: center;
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
         align-items: flex-start;
-        text-align: left;
     }
-
     .brand-title {
         font-size: 13px;
-        margin-top: 10px;
         color: #000;
     }
-
     .product-title {
         font-size: 14px;
         margin: 10px 0;
@@ -341,6 +344,30 @@
         overflow: hidden;
     }
 
+    /* Icon yêu thích */
+    .wishlist {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background: #d4d4d4;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 50;
+    }
+    .wishlist-icon {
+        font-size: 18px;
+        color: #fff;
+        transition: color 0.2s ease;
+    }
+    .wishlist-icon.active {
+        color: #c1232f !important;
+    }
+
     /* Giá */
     .product-card .price-box {
         display: flex;
@@ -350,19 +377,53 @@
         min-height: 28px;
         margin-top: 8px;
     }
-
     .product-card .price-box .original-price {
         font-size: 14px;
         color: #999;
         text-decoration: line-through;
         line-height: 1;
     }
-
     .product-card .price-box .discounted-price {
         font-size: 16px;
         color: #000;
         font-weight: 700;
         line-height: 1;
+    }
+
+    /* Nút thêm giỏ hàng */
+    .add-to-cart-btn {
+        width: 90%;
+        padding: 8px 0;
+        background: linear-gradient(135deg, #212122 0%, #515051 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin: 10px;
+        flex-shrink: 0;
+    }
+
+    .add-to-cart-btn:hover {
+        background: linear-gradient(135deg, #676667 0%, #0b0b0b 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .add-to-cart-btn:active {
+        transform: translateY(0);
+    }
+
+    .add-to-cart-btn i {
+        font-size: 1rem;
     }
 
     /* RESPONSIVE */
@@ -541,6 +602,11 @@
             @foreach($randomProducts as $item)
                 <div class="col-md-2 col-6">
                     <div class="card product-card h-100">
+                        <!-- Yêu thích -->
+                        <div class="wishlist" data-id="{{ $item->id }}" onclick="toggleWishlist(this, {{ $item->id }})">
+                            <i class="bx bxs-heart wishlist-icon"></i>
+                        </div>
+
                         <a href="{{ route('products.show', $item->name) }}" class="text-decoration-none text-dark">
                             <img src="{{ $item->image ?? asset('img/placeholder-product.png') }}" 
                                 class="card-img-top" alt="{{ $item->name }}"
@@ -558,6 +624,14 @@
                                 </div>
                             </div>
                         </a>
+                        <!-- Nút thêm giỏ hàng -->
+                        <form action="{{ route('cart.add', $item->id) }}" method="POST" style="margin: 0;">
+                            @csrf
+                            <button type="submit" class="add-to-cart-btn">
+                                <i class="fa fa-shopping-cart"></i>
+                                Thêm vào giỏ
+                            </button>
+                        </form>
                     </div>
                 </div>
             @endforeach
@@ -573,5 +647,108 @@
             if (input.value > 1) input.value--;
         });
     });
+
+    // Hàm thêm vào giỏ hàng
+    async function addToCart(productId, button) {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+        
+        if (!csrfToken) {
+            alert('Lỗi bảo mật! Vui lòng tải lại trang.');
+            return;
+        }
+        
+        // Animation nút
+        button.classList.add('adding');
+        button.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Đang thêm...';
+        button.disabled = true;
+        
+        try {
+            const res = await fetch(`/gio-hang/add/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                credentials: 'same-origin' 
+            });
+            
+            // Kiểm tra nếu bị redirect về login (401 hoặc 302)
+            if (res.status === 401 || res.redirected) {
+                alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
+                window.location.href = '/dang-nhap';
+                return;
+            }
+            
+            // Kiểm tra lỗi 419 (CSRF)
+            if (res.status === 419) {
+                alert('Phiên làm việc đã hết hạn. Vui lòng tải lại trang!');
+                location.reload();
+                return;
+            }
+            
+            // Kiểm tra lỗi 500
+            if (res.status === 500) {
+                const text = await res.text();
+                console.error('Server error:', text);
+                alert('Lỗi server! Vui lòng kiểm tra console.');
+                button.classList.remove('adding');
+                button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
+                button.disabled = false;
+                return;
+            }
+            
+            const data = await res.json();
+            
+            if (data.success) {
+                // Hiển thị thông báo thành công
+                button.innerHTML = '<i class="fa fa-check"></i> Đã thêm';
+                setTimeout(() => {
+                    button.classList.remove('adding');
+                    button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
+                    button.disabled = false;
+                }, 1500);
+            } else {
+                alert(data.message || 'Có lỗi xảy ra!');
+                button.classList.remove('adding');
+                button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
+                button.disabled = false;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Có lỗi xảy ra! Vui lòng kiểm tra console để biết chi tiết.');
+            button.classList.remove('adding');
+            button.innerHTML = '<i class="fa fa-shopping-cart"></i> Thêm vào giỏ';
+            button.disabled = false;
+        }
+    }
+
+    // Khi bấm Yêu thích
+    function toggleWishlist(el, productId) {
+        const icon = el.querySelector(".wishlist-icon");
+        icon.classList.toggle("active");
+
+        let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+        if (icon.classList.contains("active")) {
+            if (!wishlist.includes(productId)) wishlist.push(productId);
+        } else {
+            wishlist = wishlist.filter(id => id !== productId);
+        }
+
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+        wishlist.forEach(id => {
+            let btn = document.querySelector(`.wishlist[data-id="${id}"]`);
+            if (btn) {
+                btn.querySelector(".wishlist-icon").classList.add("active");
+            }
+        });
+    });
+
 </script>
 @endsection
